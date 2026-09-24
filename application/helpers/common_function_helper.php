@@ -529,20 +529,15 @@ function getSeoDetails($page)
     $ci->db->where("page",$page);
     $ci->db->where("status",1);
     $query = $ci->db->get();
-    //echo $ci->db->last_query(); exit;
     $res = $query->row_array();
-   /* if(isset($res) && !empty($res)){
-        return  $res;
-    }else{
-        $ci = &get_instance();
-        $ci->db->select("*");
-        $ci->db->from('seo');
-        $ci->db->where("page",'generalcommon');
-        $query = $ci->db->get();
-        $res = $query->row_array();
-        return  $res;
-    }*/
-    return  $res;
+    if(empty($res)) {
+        $res = array(
+            'seotitle' => '',
+            'seodescription' => '',
+            'seokeywords' => ''
+        );
+    }
+    return $res;
 }
 //////
 function is_login_user_front()
@@ -645,8 +640,10 @@ function get_product_rating($pid="")
     }else{
         $tcount = $ci->db->select('COUNT(id) as tot_cust')->from('product_reviews')->where('status',1)->where('product_id',$pid)->get()->row_array();
         $rev_tot = $ci->db->select('SUM(rating) as tot_rating')->from('product_reviews')->where('status',1)->where('product_id',$pid)->get()->row_array();
-        $tot_rat = round($rev_tot['tot_rating']/$tcount['tot_cust']);
-        $tmp['tot_customer'] = $tcount['tot_cust'];
+        $tot_cust = (!empty($tcount) && isset($tcount['tot_cust'])) ? (int)$tcount['tot_cust'] : 0;
+        $tot_rating = (!empty($rev_tot) && isset($rev_tot['tot_rating'])) ? (float)$rev_tot['tot_rating'] : 0;
+        $tot_rat = ($tot_cust > 0) ? round($tot_rating / $tot_cust) : 0;
+        $tmp['tot_customer'] = $tot_cust;
         $tmp['rating'] = $tot_rat;
         return $tmp;
     }

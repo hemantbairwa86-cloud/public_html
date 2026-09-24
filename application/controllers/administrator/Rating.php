@@ -20,109 +20,117 @@ class Rating extends MY_Controller {
 
 	public function view_rating_ajax_data()
 	{
-		$requestData= $_REQUEST;
+		$requestData = $_REQUEST;
 		
-		$tot_rec=$this->db->select("id")->from('product_reviews')->where(1,1)->get()->result_array();
+		$tot_rec = $this->db->select("id")->from('product_reviews')->get()->result_array();
 		$totalData = count($tot_rec);
-       	$totalFiltered = $totalData; 	
-		$this->db->select("product_reviews.*,product.name, category.name as cat_name");
-        $this->db->from('product_reviews');                
-        if(!empty($requestData['search']['value'])) {
-        	$this->db->group_start();
-            $this->db->or_like('product_reviews.full_name',$requestData['search']['value']);
-            $this->db->or_like('product_reviews.city',$requestData['search']['value']);
-        //    $this->db->or_like('product.name',$requestData['search']['value']);
-			$this->db->or_like('category.name',$requestData['search']['value']);
-            $this->db->group_end();
-        }
-        $this->db->join('product', 'product.id = product_reviews.product_id','LEFT');
-		$this->db->join('category', 'product.collectiontype = category.id','LEFT');
-//        $this->db->where('orders.status',1);
-		$this->db->order_by('product_reviews.id','desc');
-        $this->db->limit($requestData['length'], $requestData['start']);
-        $query1 = $this->db->get();
-        $row=$query1->result_array();	
-       // echo $this->db->last_query();			exit;
-		$k=$requestData['start'] + 1;
-        $data = array();
-        foreach ($row as $key => $val) 
-        { 
-			$star ='';
-			if($val[rating]==5){ 
-			$star = '<span class="fa fa-star text-warning  checked"></span>
-			<span class="fa fa-star text-warning checked"></span>
-			<span class="fa fa-star text-warning checked"></span>
-			<span class="fa fa-star text-warning checked"></span>
-			<span class="fa fa-star text-warning checked"></span>';
+		$totalFiltered = $totalData; 	
+
+		$this->db->select("product_reviews.*, product.name, category.name as cat_name");
+		$this->db->from('product_reviews');                
+		if(!empty($requestData['search']['value'])) {
+			$this->db->group_start();
+			$this->db->or_like('product_reviews.full_name', $requestData['search']['value']);
+			$this->db->or_like('product_reviews.city', $requestData['search']['value']);
+			$this->db->or_like('category.name', $requestData['search']['value']);
+			$this->db->or_like('product.name', $requestData['search']['value']);
+			$this->db->group_end();
+		}
+		$this->db->join('product', 'product.id = product_reviews.product_id', 'LEFT');
+		$this->db->join('category', 'product.collectiontype = category.id', 'LEFT');
+		$this->db->order_by('product_reviews.id', 'desc');
+
+		$start = isset($requestData['start']) ? intval($requestData['start']) : 0;
+		$length = isset($requestData['length']) ? intval($requestData['length']) : 10;
+		if ($length > 0) {
+			$this->db->limit($length, $start);
+		}
+
+		$query1 = $this->db->get();
+		$row = $query1 ? $query1->result_array() : array();
+		
+		$k = $start + 1;
+		$data = array();
+		foreach ($row as $key => $val) 
+		{ 
+			$star = '';
+			$rating_val = isset($val['rating']) ? intval($val['rating']) : 0;
+			if($rating_val == 5){ 
+				$star = '<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>';
 			}
-			if($val[rating]==4){ 
-			$star = '<span class="fa fa-star text-warning  checked"></span>
-			<span class="fa fa-star text-warning checked"></span>
-			<span class="fa fa-star text-warning checked"></span>
-			<span class="fa fa-star text-warning checked"></span>';
+			else if($rating_val == 4){ 
+				$star = '<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>';
 			}
-			if($val[rating]==3){ 
-			$star = '<span class="fa fa-star text-warning  checked"></span>
-			<span class="fa fa-star text-warning checked"></span>
-			<span class="fa fa-star text-warning checked"></span>';
+			else if($rating_val == 3){ 
+				$star = '<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>';
 			}
-			if($val[rating]==2){ 
-			$star = '<span class="fa fa-star text-warning  checked"></span>
-			<span class="fa fa-star text-warning checked"></span>';
+			else if($rating_val == 2){ 
+				$star = '<span class="fa fa-star text-warning checked"></span>
+				<span class="fa fa-star text-warning checked"></span>';
 			}
-			if($val[rating]==1){ 
-			$star = '<span class="fa fa-star text-warning  checked"></span>';
+			else if($rating_val == 1){ 
+				$star = '<span class="fa fa-star text-warning checked"></span>';
 			}			
 			
 			$mylink = base_url()."administrator/rating/view/".$val['id']; 
-			if($val['status']==0) { $status = '<label class="badge badge-danger">Pending</label>' ; } 
-			else { $status = '<label class="badge badge-success">Approved</label>' ; }
+			if($val['status'] == 0) { 
+				$status = '<label class="badge badge-danger">Pending</label>'; 
+			} else { 
+				$status = '<label class="badge badge-success">Approved</label>'; 
+			}
 			
-            $nestedData = array();
-            $nestedData[] = $k;
-            $nestedData[] = $val['cat_name'];
-           // $nestedData[] = date('d-M,Y',strtotime($val['OrderDate']))." ".date('H:i A',strtotime($val['OrderTime']));;
-            $nestedData[] = $val['name'];
+			$nestedData = array();
+			$nestedData[] = $k;
+			$nestedData[] = !empty($val['cat_name']) ? $val['cat_name'] : '-';
+			$nestedData[] = !empty($val['name']) ? $val['name'] : '-';
 			$nestedData[] = $star;
-            $nestedData[] = $val['full_name'];
-            $nestedData[] = $val['city'];
-			$nestedData[] = $status ;
-			$nestedData[] = '<a  href="'.$mylink.'" class="btn btn-outline-primary" >View</a>&nbsp;&nbsp;<a href="javascript:void(0);" onClick="check_confirm_delete('.$val['id'].');" class="btn btn-outline-danger">Delete</a>';            
-            $data[] = $nestedData;
-            $k++  ; 			
-        }
-        $json_data = array(
-            "draw"            =>intval($requestData['draw']),  
-            "recordsTotal"    => intval( $totalData ),  
-            "recordsFiltered" => intval( $totalFiltered ), 
-            "data"            => $data   
-            );
-        echo json_encode($json_data);  // send data as json format 
+			$nestedData[] = !empty($val['full_name']) ? $val['full_name'] : '-';
+			$nestedData[] = !empty($val['city']) ? $val['city'] : '-';
+			$nestedData[] = $status;
+			$nestedData[] = '<a href="'.$mylink.'" class="btn btn-outline-primary btn-sm">View</a>&nbsp;<a href="javascript:void(0);" onClick="check_confirm_delete('.$val['id'].');" class="btn btn-outline-danger btn-sm">Delete</a>';            
+			$data[] = $nestedData;
+			$k++; 			
+		}
+
+		$json_data = array(
+			"draw"            => intval(isset($requestData['draw']) ? $requestData['draw'] : 1),  
+			"recordsTotal"    => intval($totalData),  
+			"recordsFiltered" => intval($totalFiltered), 
+			"data"            => $data   
+		);
+
+		header('Content-Type: application/json');
+		echo json_encode($json_data);  
+		exit;
 	} 
 	public function view($id='')
 	{
-		
-
 		$review = $this->Crud_Model->get_product_reviews($id);
-		//echo "<pre>" ; print_r($review) ; exit;
 		if(!empty($review))
 		{		
-			
-			$images = $this->Crud_Model->getDatafromtablewhere('product_image',array('product_id'=>$id));	
-			//echo "<pre>"; print_r($images); exit;
+			$product_id = isset($review['product_id']) ? $review['product_id'] : 0;
+			$images = !empty($product_id) ? $this->Crud_Model->getDatafromtablewhere('product_image', array('product_id' => $product_id)) : array();	
 			
 			$data["review"] = $review;
 			$data["images"] = $images;
-			$data['page_title']='Product Rating';
+			$data['page_title'] = 'Product Rating Detail';
 			$data['active_menu'] = 'rating';
 			$data['sub_active_menu'] = '';
-			$this->load->view('administrator/view_product_rating_detail',$data);
+			$this->load->view('administrator/view_product_rating_detail', $data);
 		}
 		else
 		{
-			redirect('administrator/dashboard','refresh');
+			redirect('administrator/rating', 'refresh');
 			exit;
-			
 		}
 	}
 

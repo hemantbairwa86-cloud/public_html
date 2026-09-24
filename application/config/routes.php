@@ -81,5 +81,7 @@ $route["third-party-manufacturing"] = "about/third_party_manufacturing";
 
 $route["forgot-password"] = "login/forgot";
 $route["reset-password"] = "login/reset_link";
+$route["register"] = "login/index/register";
+$route["signup"] = "login/index/register";
 
 $route["profile/change-password"] = "dashboard/update_password";

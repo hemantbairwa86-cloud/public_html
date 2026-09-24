@@ -31,19 +31,23 @@ class Home extends CI_Controller {
 			$result = $this->User->login($username, $password);
 			if($result)
 			{
+				$this->session->unset_userdata('errors');
+				$this->session->set_flashdata('errors', NULL);
 				redirect('administrator/dashboard', 'refresh');
 				exit;
 			}
 			else
 			{
 				$this->session->set_flashdata('errors', 'Invalid username or password');
-				$this->load->view('administrator/home');
+				redirect('administrator/home', 'refresh');
+				exit;
 			}
 		}
 	}
 	public function logout()
     {
    		$this->session->unset_userdata('VenusProductSession');
+   		$this->session->unset_userdata('errors');
    		session_destroy();
    		redirect('administrator/home', 'refresh');
     }

@@ -63,19 +63,27 @@
       <!-- container-scroller -->
       <?php $this->load->view('administrator/common/footer-js');?> 
       <script type="text/javascript">
-            $(document).ready(function() {
-              var dataTable = $('#tbl_listing').DataTable( {
-                "processing": true,
-                "serverSide": true,
-                "ajax":{
-                url :"<?php echo base_url(); ?>administrator/rating/view_rating_ajax_data", // json datasource
-                type: "post",  // method  , by default get
-                error: function(){  // error handling          
-                }
-                }
-              } );
-            } );
-      </script>
+             $(document).ready(function() {
+               var dataTable = $('#tbl_listing').DataTable( {
+                 "processing": true,
+                 "serverSide": true,
+                 "language": {
+                   "emptyTable": "No ratings found",
+                   "zeroRecords": "No matching ratings found",
+                   "infoEmpty": "Showing 0 to 0 of 0 entries",
+                   "processing": "<div class='p-2'><i class='fa fa-spinner fa-spin mr-2'></i>Loading...</div>"
+                 },
+                 "ajax":{
+                   url :"<?php echo base_url(); ?>administrator/rating/view_rating_ajax_data",
+                   type: "post",
+                   error: function(xhr, error, code){
+                     console.error("DataTables AJAX error: ", error, xhr.responseText);
+                     $('#tbl_listing_processing').hide();
+                   }
+                 }
+               } );
+             } );
+       </script>
       <script type="text/javascript">
   function check_confirm_delete(row_id)
   {

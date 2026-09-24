@@ -17,6 +17,8 @@
 <!-- endinject -->
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo  base_url(); ?>assest/frontend/images/favicon.png">
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/administrator/toggle/style.css">
+<!-- Venus Products Custom Brand Theme -->
+<link rel="stylesheet" href="<?php echo  base_url(); ?>assest/administrator/css/custom-theme.css">
 <script type="text/javascript">
     var base_url = "<?php echo  base_url(); ?>";    
 </script> 

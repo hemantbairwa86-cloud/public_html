@@ -1077,24 +1077,13 @@ class crud_model extends CI_Model{
 	
 	public function get_product_reviews($id)
 	{
-		$this->db->select("product_reviews.*,product.name, category.name as cat_name");
-        $this->db->from('product_reviews');                
-        if(!empty($requestData['search']['value'])) {
-        	$this->db->group_start();
-            $this->db->or_like('product_reviews.full_name',$requestData['search']['value']);
-            $this->db->or_like('product_reviews.city',$requestData['search']['value']);
-        //    $this->db->or_like('product.name',$requestData['search']['value']);
-			$this->db->or_like('category.name',$requestData['search']['value']);
-            $this->db->group_end();
-        }
-        $this->db->join('product', 'product.id = product_reviews.product_id','LEFT');
-		$this->db->join('category', 'product.collectiontype = category.id','LEFT');
-        $this->db->where('product_reviews.id',$id);
-		$this->db->order_by('product_reviews.id','desc');
-        $this->db->limit($requestData['length'], $requestData['start']);
-        $query1 = $this->db->get();
-        return $query1->row_array();	
-       // echo $this->db->last_query();			exit;
+		$this->db->select("product_reviews.*, product.name, category.name as cat_name");
+		$this->db->from('product_reviews');                
+		$this->db->join('product', 'product.id = product_reviews.product_id', 'LEFT');
+		$this->db->join('category', 'product.collectiontype = category.id', 'LEFT');
+		$this->db->where('product_reviews.id', $id);
+		$query1 = $this->db->get();
+		return $query1 ? $query1->row_array() : array();	
 	}
 	
 }

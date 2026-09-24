@@ -82,18 +82,15 @@ class Ajax extends MY_Controller {
 		  $sts_list = '<option value="">Select</option>';
 		  if($cid)
 		  {
-				$sts=$this->Crud_Model->getDatafromtablewhere('own_states',array('country_id'=>$cid));
+				$sts=$this->Crud_Model->getDatafromtablewhere('own_states',array('country_id'=>$cid),'ASC');
 				foreach ($sts as $key => $v)
 				{
-					if($v['id'] == 12 || $v['id'] == 22)		// Gujarat & Maharashtra Fix
+					$sel="";
+					if($stsid==$v['id'])
 					{
-						$sel="";
-						if($stsid==$v['id'])
-						{
-							$sel="selected";
-						}
-						$sts_list .= '<option '.$sel.' value="'.$v['id'].'">'.$v['name'].'</option>';
-					}	
+						$sel="selected";
+					}
+					$sts_list .= '<option '.$sel.' value="'.$v['id'].'">'.$v['name'].'</option>';
 				}
 		  }
 		  echo json_encode(array('error'=>0,'sts_list'=>$sts_list)); exit;
@@ -194,18 +191,19 @@ class Ajax extends MY_Controller {
 	 
 	public function check_duplicate_email()
 	{
-		$email = $this->input->post('email');
+		$email = trim($this->input->post('email'));
+		if(empty($email)) {
+			echo json_encode(array('error'=>0,'msg'=>'')); exit;
+		}
 		$this->db->select("id");
 		$this->db->from('users');
 		$this->db->where('email',$email);
 		$query=$this->db->get();
-		$query->row_array();
 		if($query->num_rows() > 0)
 		{
 			echo json_encode(array('error'=>1,'msg'=>'Email already exists. Enter New Email Id.')); exit;
 		}else{
 			echo json_encode(array('error'=>0,'msg'=>'')); exit;
-
 		}
 	}
 

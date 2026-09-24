@@ -15,32 +15,33 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/administrator/css/style.css">
+  <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/administrator/css/custom-theme.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="<?php echo  base_url(); ?>assest/administrator/images/favicon.png" />
 </head>
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth"  style="background-color:#add8e6">
+      <div class="content-wrapper d-flex align-items-center auth auth-theme-bg">
         <div class="row w-100">
-          <div class="col-lg-5 mx-auto">
-            <div class="auth-form-dark text-left p-5">
-              <h2>Forgot Password</h2>
+          <div class="col-lg-5 col-md-7 mx-auto">
+            <div class="auth-form-emerald text-left p-5">
+              <h2 class="text-center mb-1" style="font-weight:800;font-size:2.2rem;color:#184d47">Reset Password</h2>
+              <p class="text-center mb-4" style="color:#64748b;">Enter your email to receive a password reset link</p>
               
               <?php $this->load->view('administrator/common/errors');?> 
-              <form id="loginform" class="pt-5" action="<?php echo base_url(); ?>administrator/home/reset_link" method="post"  autocomplete="off">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email</label>
-                  <input type="email" class="form-control" name="identity" id="identity" placeholder="Enter your Email" required>
-                  <i class="mdi mdi-account"></i>
-                  <?php echo '<div id="error_message" class="text-danger">'. form_error('identity').'</div>' ?>
+              <form id="loginform" class="pt-2" action="<?php echo base_url(); ?>administrator/home/reset_link" method="post"  autocomplete="off">
+                <div class="form-group mb-4">
+                  <label for="exampleInputEmail1">Email Address</label>
+                  <input type="email" class="form-control" name="identity" id="identity" placeholder="Enter your registered email" style="padding:12px 14px;" required>
+                  <?php echo '<div id="error_message" class="text-danger small mt-1">'. form_error('identity').'</div>' ?>
                 </div>
                 
-                <div class="mt-5">
-                  <button type="submit" class="btn btn-block btn-warning btn-lg font-weight-medium" /> Send</button></span>
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-bold" style="padding:12px;font-size:1rem;"> Send Reset Link</button>
                 </div>
-                <div class="mt-3 text-center">
-                 <p>Remember your password ? <a href="<?php echo base_url(); ?>administrator/home" class="auth-link" style="color:#ff9800">Login Now</a></p>
+                <div class="mt-4 text-center">
+                 <p style="color:#4a5568;">Remember your password? <a href="<?php echo base_url(); ?>administrator/home" class="auth-link" style="color:#179957;font-weight:700;text-decoration:none;">Login Now</a></p>
                 </div>
               </form>
             </div>

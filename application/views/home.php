@@ -1,15 +1,22 @@
+<?php
+$SeoDetails = is_array($SeoDetails ?? null) ? $SeoDetails : array();
+$seo_title = $SeoDetails['seotitle'] ?? '';
+$seo_desc  = $SeoDetails['seodescription'] ?? '';
+$seo_keys  = $SeoDetails['seokeywords'] ?? '';
+$firm_name = defined('FIRM_NAME') ? FIRM_NAME : 'Venus Products';
+?>
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
+<title><?php echo !empty($seo_title) ? ($seo_title . " | " . $firm_name) : $firm_name; ?></title>
 <meta name="robots" content="noindex, follow" />
-<meta name="description" content="<?php echo $SeoDetails['seodescription'];?>">
-<meta name="keywords" content="<?php echo $SeoDetails['seokeywords'];?>">
-<meta name="author" content="<?php echo FIRM_NAME;  ?>">
-<meta property="og:title" content="<?php echo $SeoDetails['seotitle'];?> |  KD Bhindi Jewellers" />
-<meta property="og:description" content="<?php echo $SeoDetails['seodescription'];?>" />
+<meta name="description" content="<?php echo $seo_desc; ?>">
+<meta name="keywords" content="<?php echo $seo_keys; ?>">
+<meta name="author" content="<?php echo $firm_name; ?>">
+<meta property="og:title" content="<?php echo !empty($seo_title) ? ($seo_title . " | " . $firm_name) : $firm_name; ?>" />
+<meta property="og:description" content="<?php echo $seo_desc; ?>" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="<?php echo  base_url(); ?>assest/frontend/css/font-awesome.min.css" rel="stylesheet">
 <?php $this->load->view('common/common_css.php');?>
@@ -99,12 +106,13 @@
       </div>
       <div class="product-slider-active product-border-box-two">
         <?php 
+        $products_new = is_array($products_new ?? null) ? $products_new : array();
         foreach ($products_new as $key => $v) {
           $rating = get_product_rating($v['id']);
-
+          $thumb_img = (!empty($v['images'][0]['image_name'])) ? $v['images'][0]['image_name'] : 'noimagethumb.jpg';
          ?>
         <div class="single-product-item">
-          <div class="single-product-item-image"> <a href="<?php echo base_url()."product/".$v['cate_slug']."/".$v['slug']; ?>" class="prodcut-images"> <img class="primary-image" src="<?php echo  base_url().'uploads/product/thumbnails/'.$v['images'][0]['image_name']; ?>" alt="<?php echo $v['name']; ?>"></a>
+          <div class="single-product-item-image"> <a href="<?php echo base_url()."product/".$v['cate_slug']."/".$v['slug']; ?>" class="prodcut-images"> <img class="primary-image" src="<?php echo  base_url().'uploads/product/thumbnails/'.$thumb_img; ?>" alt="<?php echo $v['name']; ?>"></a>
             <ul class="single-product-item-action">
               <li class="single-product-item-action-list"> 
                 <a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $v['id']; ?>);" class="single-product-item-action-link"><i class="icon-rt-heart2"></i></a> 
@@ -178,9 +186,14 @@
       </div>
       <div class="product-slider-active-grid product-border-box">
         <?php 
-        foreach ($products_best as $key => $v) { $rating = get_product_rating($v['id']); ?>
+        $products_best = is_array($products_best ?? null) ? $products_best : array();
+        foreach ($products_best as $key => $v) { 
+          $rating = get_product_rating($v['id']); 
+          $thumb_img = (!empty($v['images'][0]['image_name'])) ? $v['images'][0]['image_name'] : 'noimagethumb.jpg';
+          $new_price = (!empty($v['price_list'][0]['new_price'])) ? $v['price_list'][0]['new_price'] : '';
+        ?>
         <div class="single-product-item">
-          <div class="single-product-item-image"> <a href="<?php echo base_url()."product/".$v['cate_slug']."/".$v['slug']; ?>" class="prodcut-images"> <img class="primary-image" src="<?php echo  base_url().'uploads/product/thumbnails/'.$v['images'][0]['image_name']; ?>" alt="<?php echo $v['name']; ?>"></a>
+          <div class="single-product-item-image"> <a href="<?php echo base_url()."product/".$v['cate_slug']."/".$v['slug']; ?>" class="prodcut-images"> <img class="primary-image" src="<?php echo  base_url().'uploads/product/thumbnails/'.$thumb_img; ?>" alt="<?php echo $v['name']; ?>"></a>
             <ul class="single-product-item-action">
               <li class="single-product-item-action-list"> 
                 <a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $v['id']; ?>);" class="single-product-item-action-link"><i class="icon-rt-heart2"></i></a> 
@@ -202,7 +215,7 @@
                     <?php } ?>
             </div>
             <h6 class="single-product-item-title"><a href="<?php echo base_url()."product/".$v['cate_slug']."/".$v['slug']; ?>"><?php echo $v['name']; ?></a></h6>
-            <div class="single-product-item-price"> <?php echo $v['price_list'][0]['new_price']; ?> <?php /*- ?><s><?php echo $v['price_list'][0]['old_price']; ?></s> <?php */ ?> </div>
+            <div class="single-product-item-price"> <?php echo $new_price; ?> <?php /*- ?><s><?php echo $v['price_list'][0]['old_price']; ?></s> <?php */ ?> </div>
           </div>
         </div>
         <?php 

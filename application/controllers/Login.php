@@ -11,23 +11,36 @@ class Login extends MY_Controller {
 
 	public function index()
 	{
+		$this->data['title'] = "Login / Registration";
+		$this->data['act_page'] = "";
+		$this->data['act_sub_page'] = "";
+		$this->data['country_id'] = 101;
+		$this->data['country_list'] = $this->Crud_Model->getDatafromtablewhere('own_countries',array('id'=>101));
+
+		$url_mode = !empty($mode) ? $mode : $this->input->get('mode');
+		if(empty($url_mode) && ($this->uri->segment(1) == 'register' || $this->uri->segment(1) == 'signup' || $this->uri->segment(2) == 'register' || $this->uri->segment(2) == 'signup')) {
+			$url_mode = 'register';
+		}
+		$this->data['initial_mode'] = ($url_mode == 'register' || $url_mode == 'signup') ? 'register' : 'login';
+
+		$fields = array('first_name', 'last_name', 'address', 'landmark', 'country', 'state', 'city', 'pincode', 'mobile', 'email', 'password', 'confirm_password', 'address_extra', 'landmark_extra', 'country_extra', 'state_extra', 'city_extra', 'pincode_extra', 'mobile_extra', 'email_extra');
+		foreach($fields as $f) {
+			if (!isset($this->data[$f])) {
+				$this->data[$f] = '';
+			}
+		}
 		
 		if(count($this->input->post()) > 0 )
 		{
+			$btn = trim($this->input->post('btn'));
+			$email_post = $this->input->post('email');
 			
-			$btn = trim($this->input->post('btn'));			
-			if($btn == 'Login') 
+			if($btn == 'Login' || !empty($email_post)) 
 			{
 				$this->form_validation->set_rules('email', 'Email Id', 'trim|required');
 				$this->form_validation->set_rules('password', 'Password', 'trim|required');
 				if ($this->form_validation->run() == FALSE) 
 				{
-					//echo "000zzzzzzzzzzzzz"; exit;
-					$this->data['title'] = "Login / Registration";
-					$this->data['act_page'] = "";
-					$this->data['act_sub_page'] = "";
-					$this->data['country_id'] = 101;
-					$this->data['country_list']=$this->Crud_Model->getDatafromtablewhere('own_countries',array('id'=>101));
 					$this->load->view('login',$this->data);
 				}
 				else
@@ -37,29 +50,26 @@ class Login extends MY_Controller {
 					$user=$this->db->select("*")->from('users')->where('email',$email)->where('password',md5($password))->get()->row_array();
 					if(empty($user))
 					{
-						$this->session->set_flashdata('errors', 'Invalid Email Id or Passwrod. Try Again.');
+						$this->session->set_flashdata('errors', 'Invalid Email Id or Password. Try Again.');
 						redirect('login','refresh'); exit;
 					}else
 					{
 						$address=$this->db->select("id")->from('users_address')->where('user_id',$user['id'])->where('is_default',1)->get()->row_array();
-						$user['cur_sel_address'] = $address['id'];
+						$user['cur_sel_address'] = isset($address['id']) ? $address['id'] : '';
 						$this->session->set_userdata('user_front_session',$user);
 						
 						redirect('dashboard','refresh'); exit;
 					}
 					
 				}
-				
-				
+			}
+			else
+			{
+				$this->load->view('login',$this->data);
 			}
 		}
 		else
 		{
-			$this->data['title'] = "Login / Registration";
-			$this->data['act_page'] = "";
-			$this->data['act_sub_page'] = "";
-			$this->data['country_id'] = 101;
-			$this->data['country_list']=$this->Crud_Model->getDatafromtablewhere('own_countries',array('id'=>101));
 			$this->load->view('login',$this->data);
 		}
 		
@@ -71,36 +81,40 @@ class Login extends MY_Controller {
 		{
 			redirect('dashboard'); exit;
 		}
+
+		$this->data['title'] = "Login / Registration";
+		$this->data['act_page'] = "";
+		$this->data['act_sub_page'] = "";
+		$this->data['country_id'] = 101;
+		$this->data['country_list'] = $this->Crud_Model->getDatafromtablewhere('own_countries',array('id'=>101));
+		$this->data['initial_mode'] = 'register';
+
+		$fields = array('first_name', 'last_name', 'address', 'landmark', 'country', 'state', 'city', 'pincode', 'mobile', 'email', 'password', 'confirm_password', 'address_extra', 'landmark_extra', 'country_extra', 'state_extra', 'city_extra', 'pincode_extra', 'mobile_extra', 'email_extra');
+		foreach($fields as $f) {
+			$this->data[$f] = trim($this->input->post($f));
+		}
+
+		if (count($this->input->post()) == 0)
+		{
+			$this->load->view('login', $this->data);
+			return;
+		}
+
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-		$this->form_validation->set_rules('address','address', 'trim|required');
-		$this->form_validation->set_rules('landmark','landmark', 'trim|required');
-		//$this->form_validation->set_rules('country','country', 'trim|required|numeric');
-		$this->form_validation->set_rules('state','state', 'trim|required|numeric');
-		$this->form_validation->set_rules('city','city', 'trim|required');
-		$this->form_validation->set_rules('pincode','pincode', 'trim|required');
-		$this->form_validation->set_rules('mobile','mobile', 'trim|required');
-		$this->form_validation->set_rules('email','email', 'trim|required');
-		$this->form_validation->set_rules('password','password', 'trim|required');
-		$this->form_validation->set_rules('confirm_password','confirm_password', 'trim|required|matches[password]');
+		$this->form_validation->set_rules('address','Address', 'trim|required');
+		$this->form_validation->set_rules('landmark','Landmark', 'trim|required');
+		$this->form_validation->set_rules('state','State', 'trim|required|numeric');
+		$this->form_validation->set_rules('city','City', 'trim|required');
+		$this->form_validation->set_rules('pincode','Pincode', 'trim|required');
+		$this->form_validation->set_rules('mobile','Mobile', 'trim|required');
+		$this->form_validation->set_rules('email','Email', 'trim|required|valid_email|is_unique[users.email]', array('is_unique' => 'This Email is already registered. Please login or use a different email.'));
+		$this->form_validation->set_rules('password','Password', 'trim|required');
+		$this->form_validation->set_rules('confirm_password','Confirm Password', 'trim|required|matches[password]');
+
 		if ($this->form_validation->run() == FALSE) 
 		{
 			$this->data['cart'] = $this->cart->contents();
-			$this->data['title'] = "Checkout";
-			$this->data['country_id'] = 101;
-			$this->data['country_list']=$this->Crud_Model->getDatafromtablewhere('own_countries',array('id'=>101));
-			$this->data['first_name'] = trim($this->input->post('first_name'));
-			$this->data['last_name'] = trim($this->input->post('last_name'));
-			$this->data['address'] = trim($this->input->post('address'));
-			$this->data['landmark'] = trim($this->input->post('landmark'));
-			$this->data['country'] = trim($this->input->post('country'));
-			$this->data['state'] = trim($this->input->post('state'));
-			$this->data['city'] = trim($this->input->post('city'));
-			$this->data['pincode'] = trim($this->input->post('pincode'));
-			$this->data['mobile'] = trim($this->input->post('mobile'));
-			$this->data['email'] = trim($this->input->post('email'));
-			$this->data['password'] = trim($this->input->post('password'));
-			$this->data['confirm_password'] = trim($this->input->post('confirm_password'));
 			$this->load->view('login',$this->data);
 		}
 		else
@@ -108,7 +122,7 @@ class Login extends MY_Controller {
 			$ins_data['name'] = trim($this->input->post('first_name'));
 			$ins_data['surname'] = trim($this->input->post('last_name'));
 			$ins_data['address_1'] = trim($this->input->post('address'));
-			$ins_data['country'] = 101;//trim($this->input->post('country'));
+			$ins_data['country'] = 101;
 			$ins_data['state'] = trim($this->input->post('state'));
 			$ins_data['city'] = trim($this->input->post('city'));
 			$ins_data['pincode'] = trim($this->input->post('pincode'));
@@ -123,7 +137,7 @@ class Login extends MY_Controller {
 			{
 				$ins_add['landmark'] = trim($this->input->post('landmark'));
 				$ins_add['address'] = trim($this->input->post('address'));
-				$ins_add['country'] = 101;//
+				$ins_add['country'] = 101;
 				$ins_add['state'] = trim($this->input->post('state'));
 				$ins_add['city'] = trim($this->input->post('city'));
 				$ins_add['pincode'] = trim($this->input->post('pincode'));
@@ -136,28 +150,28 @@ class Login extends MY_Controller {
 				$ins_add_id = $this->db->insert_id();
 				$user=$this->db->select("*")->from('users')->where('id',$ins_id)->get()->row_array();
 				$user['cur_sel_address'] = $ins_add_id;
-       			$this->session->set_userdata('user_front_session',$user);
+				$this->session->set_userdata('user_front_session',$user);
 			}
 
 			if($this->input->post('diffrent_ship'))
 			{
-				$ins_add['landmark'] = trim($this->input->post('landmark_extra'));
-				$ins_add['address'] = trim($this->input->post('address_extra'));
-				$ins_add['country'] = 101;//trim($this->input->post('country'));
-				$ins_add['state'] = trim($this->input->post('state_extra'));
-				$ins_add['city'] = trim($this->input->post('city_extra'));
-				$ins_add['pincode'] = trim($this->input->post('pincode_extra'));
-				$ins_add['mo_number'] = trim($this->input->post('mobile_extra'));
-				$ins_add['email'] = trim($this->input->post('email_extra'));
-				$ins_add['create_at'] = date("Y-m-d H:i:s");
-				$ins_add['user_id'] = $this->session->userdata('user_front_session')['id'];
-				$this->db->insert('users_address',$ins_add);
+				$ins_add_extra['landmark'] = trim($this->input->post('landmark_extra'));
+				$ins_add_extra['address'] = trim($this->input->post('address_extra'));
+				$ins_add_extra['country'] = 101;
+				$ins_add_extra['state'] = trim($this->input->post('state_extra'));
+				$ins_add_extra['city'] = trim($this->input->post('city_extra'));
+				$ins_add_extra['pincode'] = trim($this->input->post('pincode_extra'));
+				$ins_add_extra['mo_number'] = trim($this->input->post('mobile_extra')) ?: trim($this->input->post('mobile'));
+				$ins_add_extra['email'] = trim($this->input->post('email_extra')) ?: trim($this->input->post('email'));
+				$ins_add_extra['create_at'] = date("Y-m-d H:i:s");
+				$ins_add_extra['user_id'] = $this->session->userdata('user_front_session')['id'];
+				$this->db->insert('users_address',$ins_add_extra);
 				$ins_add_id = $this->db->insert_id();
 				$user=$this->db->select("*")->from('users')->where('id',$ins_id)->get()->row_array();
 				$user['cur_sel_address'] = $ins_add_id;
-       			$this->session->set_userdata('user_front_session',$user);
-       			$user_id= $this->session->userdata('user_front_session')['id'];	
+				$this->session->set_userdata('user_front_session',$user);
 			}
+			$this->session->set_flashdata('success', 'Registration successful! Welcome to Venus Products.');
 			redirect('dashboard'); exit;
 		}
 	}	

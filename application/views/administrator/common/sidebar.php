@@ -58,6 +58,6 @@
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/counter"> <i class="fa fa-star-o menu-icon"></i> <span class="menu-title">Counter</span> </a> </li>
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/seo"> <i class="icon-search menu-icon"></i> <span class="menu-title">SEO</span> </a> </li>
     <?php /* <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/report"> <i class="icon-box menu-icon"></i> <span class="menu-title">Report</span> </a> </li> */ ?>
-    <li class="" style="text-align:center"><a class="nav-link bg-warning text-white" href="javascript:void(0)" onclick="check_confirm();"><span class="menu-title" style="font-weight:800;font-size:16px;text-transform:capitalize">Logout</span> </a> </li>
+    <li class="" style="text-align:center"><a class="nav-link sidebar-logout-btn" href="javascript:void(0)" onclick="check_confirm();"><i class="mdi mdi-logout menu-icon mr-2 text-white"></i><span class="menu-title" style="font-weight:700;font-size:15px;">Logout</span> </a> </li>
   </ul>
 </nav>

@@ -28,7 +28,6 @@ class Customer extends MY_Controller {
 	}
 
 	public function view_customer_ajax_data()
-
 	{	   
 
 		$requestData= $_REQUEST;

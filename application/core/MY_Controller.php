@@ -13,7 +13,7 @@ class MY_Controller extends CI_Controller
 		$this->data['base_assets'] 		= $this->config->item('base_assets');
 		$this->data['base_uploads'] 		= $this->config->item('base_uploads');
 		$DailyRateChangerDetails = DailyRateChangerDetails();
-		$this->data['DailyRateChangerDetails'] = $DailyRateChangerDetails['name'];
+		$this->data['DailyRateChangerDetails'] = (is_array($DailyRateChangerDetails) && isset($DailyRateChangerDetails['name'])) ? $DailyRateChangerDetails['name'] : '';
 		$this->data['WebsiteInformation'] =WebsiteInformation();
 		$this->data['CollectionDetails'] =CollectionDetails();
 		$this->data['CollectionDetailsFooter'] =CollectionDetails();
@@ -59,6 +59,9 @@ class MY_Controller extends CI_Controller
 	{
 	   if($this->session->userdata('VenusProductSession'))
 	    {
+	    	if($this->session->userdata('errors') == 'Invalid username or password'){
+	    		$this->session->unset_userdata('errors');
+	    	}
 	    	$this->load->model('administrator/User','',TRUE);
 	    	$user=$this->session->userdata('VenusProductSession');
 	    	$result = $this->User->login($user->id,'',true);
