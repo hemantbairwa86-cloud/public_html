@@ -1123,17 +1123,35 @@ span.text-danger-note,
   line-height: 1.5 !important;
 }
 
-/* Table Action Buttons (Edit, Delete, Cancel) */
+/* Table Action Buttons (Edit, Delete, Cancel) - Perfect Alignment & Sizing */
+.btn-outline-success,
+a.btn-outline-success,
+.btn-edit,
+.btn-outline-danger,
+a.btn-outline-danger,
+.btn-delete,
+.btn-cancel,
+.table td .btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+  height: 32px !important;
+  line-height: 1 !important;
+  padding: 0 14px !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  margin: 2px 3px !important;
+  box-sizing: border-box !important;
+}
+
 .btn-outline-success,
 a.btn-outline-success,
 .btn-edit {
   background-color: #f0fdf4 !important;
   border: 1.5px solid #16a34a !important;
   color: #15803d !important;
-  font-weight: 600 !important;
   border-radius: 6px !important;
-  padding: 5px 14px !important;
-  font-size: 0.84rem !important;
   transition: all 0.2s ease !important;
 }
 
@@ -1153,10 +1171,7 @@ a.btn-outline-danger,
   background-color: #fef2f2 !important;
   border: 1.5px solid #dc2626 !important;
   color: #b91c1c !important;
-  font-weight: 600 !important;
   border-radius: 6px !important;
-  padding: 5px 14px !important;
-  font-size: 0.84rem !important;
   transition: all 0.2s ease !important;
 }
 
@@ -1168,6 +1183,10 @@ a.btn-outline-danger:hover,
   color: #ffffff !important;
   box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25) !important;
   transform: translateY(-1px) !important;
+}
+
+.table td {
+  vertical-align: middle !important;
 }
 
 /* Small Mobile Phones (max-width: 575.98px) */
