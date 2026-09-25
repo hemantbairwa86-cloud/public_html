@@ -41,19 +41,20 @@
                       <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                                <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                               </span>
                             </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-3 text-center">
                       <?php if(isset($image) && $image != ''){ 
                           $img=base_url().'uploads/administrator/'.$image;
                         }else{
                           $img=base_url().'uploads/empty_user.png';
                         }?>
-                        <div class="form-group">
-                            <label for="exampleInputName1">&nbsp;</label>
-                           <img src="<?php echo $img; ?>" width="50">
+                        <div class="upload-preview-box">
+                          <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                            <img id="previewbanner1" src="<?php echo $img; ?>" alt="Admin Profile Photo">
+                          </a>
                         </div>
                       </div>
                      </div>

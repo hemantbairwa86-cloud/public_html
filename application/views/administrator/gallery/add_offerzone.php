@@ -49,16 +49,15 @@
                     
                     
                     
-                    <div class="form-group mb-3">
-                        <label for="exampleInputName1">Cover Image<span class="text-danger">*</span>                        
-                        </label>
-                        <div class="row">
+                    <div class="form-group mb-4">
+                        <label for="exampleInputName1">Cover Image <span class="text-danger">*</span></label>
+                        <div class="row align-items-center">
                           <div class="col-md-6">
                             <input type="file" accept="image/x-png,image/gif,image/jpeg" id="cover_image" name="cover_image" class="file-upload-default" >
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                                <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                               </span>
                             </div>
                             <?php echo '<div class="text-danger">'.form_error('cover_image').'</div>' ?>
@@ -72,21 +71,17 @@
                               else{
                                 $img=base_url().'uploads/book.png';
                               } ?>
-                          <div class="col-md-6"> 
-                          <div class="form-group mt-3">
-                            <label for="exampleInputName1">&nbsp;</label>
-                            <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank">
-                              <img id="previewbanner1" src="<?php echo  $img; ?>" width="100">
-                            </a>
+                          <div class="col-md-6 text-center">
+                            <div class="upload-preview-box">
+                              <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                                <img id="previewbanner1" src="<?php echo $img; ?>" alt="Offer Zone Cover Preview">
+                              </a>
+                            </div>
+                            <div class="upload-specs-info mt-2">
+                              <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>900 x 500 px</strong></span>
+                            </div>
                           </div>
-                          <div style="color:#000099;font-size:14px;">
-                           	 Image Size  = Width : <font color="#FF0000">900 px</font> &nbsp;&nbsp; Height : <font color="#FF0000">500 px</font>
-                           
-                             
-
                         </div>
-                          </div>	
-                      </div>
                     </div>
                     
                     

@@ -53,7 +53,7 @@
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                                <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                               </span>
                             </div>
                             <?php echo '<div class="text-danger">'.form_error('image').'</div>' ?>
@@ -67,16 +67,16 @@
                                 $img=base_url().'uploads/book.png';
                               }    ?>
                           
-                         <div class="col-md-12">
-                          <div class="form-group">
-                            
-                            <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank">
-                              <img id="previewbanner1" src="<?php echo  $img; ?>" style="width:75px;">
-                            </a>                            
-                          </div>
-                          <div style="color:#000099;font-size:14px;text-align:center;">
-                          Image Size  = Width : <font color="#FF0000">1920 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">680 px</font><br>
-                          Upload Image Type - <font color="#FF0000">JPG / JPEG</font></div>
+                         <div class="col-md-12 text-center mt-3">
+                           <div class="upload-preview-box">
+                             <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                               <img id="previewbanner1" src="<?php echo $img; ?>" alt="Slider Image Preview">
+                             </a>                            
+                           </div>
+                           <div class="upload-specs-info">
+                             <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>1920 x 680 px</strong></span>
+                             <span><i class="fa fa-file-image-o"></i> Type: <strong>JPG / JPEG</strong></span>
+                           </div>
                          </div> 
                       </div>
                       </div>

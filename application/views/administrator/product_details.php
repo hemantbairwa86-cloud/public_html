@@ -94,17 +94,21 @@
                   <div class="row">
                     <div class="col-md-12">
                       <h4 class="card-title">Product Images <span class="text-danger">*</span></h4>
-                      <div class="form-group mb-5">
-                        <div class="row">
+                      <div class="form-group mb-4">
+                        <div class="row align-items-center">
                           <div class="col-md-6">
                             <input type="file" accept="image/x-png,image/gif,image/jpeg" name="image_name[]" class="file-upload-default" multiple="" >
                             <div class="input-group col-xs-12">
-                              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Images">
                               <span class="input-group-append">
-                              <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                              <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                               </span> </div>
                           </div>
-                          <div style="color:#000099;font-size:14px;"> &nbsp; &nbsp; &nbsp;Image Size  = Width : 1024 px &nbsp;&nbsp;&nbsp;&nbsp; Height : 1024 px</div>
+                          <div class="col-md-6">
+                            <div class="upload-specs-info">
+                              <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>1024 x 1024 px</strong></span>
+                            </div>
+                          </div>
                         </div>
                         <?php echo '<div class="text-danger">'.form_error('image_name[]').'</div>' ?> </div>
                     </div>
@@ -114,18 +118,19 @@
                             if(!empty($image))
                             {
                               foreach ($image as $key => $value) { ?>
-                    <div class="col-md-3" id="productimage<?php echo $value['id']; ?>">
-                      <div class="img-wrapper text-center"> <img src="<?php echo  base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" class="img-thumbnail">
-                        <div class="img-overlay text-center"> <a onClick="check_confirm_delete('<?php echo $value['id']; ?>');" href="javascript:void(0);" class="btn btn-sm btn-danger"> <i class="fa fa-trash"></i> </a> </div>
+                    <div class="col-6 col-sm-4 col-md-3 mb-3" id="productimage<?php echo $value['id']; ?>">
+                      <div class="upload-preview-box w-100 text-center"> 
+                        <a href="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" target="_blank" title="Click to view full image">
+                          <img src="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" alt="Product Thumbnail">
+                        </a>
+                        <div class="mt-2 text-center"> 
+                          <a onClick="check_confirm_delete('<?php echo $value['id']; ?>');" href="javascript:void(0);" class="btn btn-sm btn-outline-danger" title="Delete Image"> <i class="fa fa-trash"></i> Delete </a> 
+                        </div>
                       </div>
                     </div>
                     <?php
                               }
                             }
-                            else
-                            {
-                              $img=base_url().'uploads/book.png';
-                            } 
                           ?>
                   </div>
                   <br>

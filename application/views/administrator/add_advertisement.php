@@ -49,17 +49,17 @@
                     
                     <div class="form-group">
                       <label for="exampleInputName1">Image</label>
-                      <div class="row">
+                      <div class="row align-items-center">
                         <div class="col-md-6">
                           <input type="file" accept="image/x-png,image/gif,image/jpeg" name="file" class="file-upload-default">
                           <div class="input-group col-xs-12">
-                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Home Logo">
+                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                             <span class="input-group-append">
-                              <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                              <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                             </span>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 text-center">
                           <?php if(isset($image) && $image != ''){
                                         $im='uploads/advertisement/'.$image;
                                         if(file_exists($im))
@@ -71,11 +71,14 @@
                                     }else{
                                       $img=base_url().'uploads/book.png';
                           } ?>
-                          <div class="form-group">
-                            <label for="exampleInputName1">&nbsp;</label>
-                            <a href="<?php echo  $img; ?>" target="_blank"><img src="<?php echo  $img; ?>" width="50"></a>
+                          <div class="upload-preview-box">
+                            <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                              <img id="previewbanner1" src="<?php echo $img; ?>" alt="Advertisement Preview">
+                            </a>
                           </div>
-                          <div style="color:#000099;font-size:14px;">Image Size  = Width : 800 px &nbsp;&nbsp;&nbsp;&nbsp; Height : 800 px</div>
+                          <div class="upload-specs-info mt-2">
+                            <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>800 x 800 px</strong></span>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -51,29 +51,28 @@
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                        <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                         </span> </div>
                       <?php echo '<div class="text-danger">'.form_error('image').'</div>' ?> </div>
                     <?php
-
                         if(isset($id) && $id!="")
-
                         {
-
-                        $img=base_url().'uploads/collections/'.$image;
-
+                          $img=base_url().'uploads/collections/'.$image;
                         }
-
                         else{
-
-                        $img=base_url().'uploads/book.png';
-
+                          $img=base_url().'uploads/book.png';
                         }    ?>
-                    <div class="form-group">
-                      <label for="exampleInputName1">&nbsp;</label>
-                      <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank"> <img id="previewbanner1" src="<?php echo  $img; ?>" width="70"> </a> </div>
-                    <div style="color:#000099;font-size:14px;text-align:center;"> Image Size  = Width : <font color="#FF0000">600 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">600 px</font><br>
-                      Upload Image Type - <font color="#FF0000">PNG</font></div>
+                    <div class="col-md-12 text-center mt-3">
+                      <div class="upload-preview-box">
+                        <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                          <img id="previewbanner1" src="<?php echo $img; ?>" alt="Category Image Preview">
+                        </a>
+                      </div>
+                      <div class="upload-specs-info">
+                        <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>600 x 600 px</strong></span>
+                        <span><i class="fa fa-file-image-o"></i> Type: <strong>PNG</strong></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="form-group">

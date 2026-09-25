@@ -34,28 +34,27 @@
                     
                     <div class="form-group">
                         <label for="exampleInputName1">Photo <span class="text-danger">*</span></label>
-                        <div class="row">
-                          <div class="col-md-8">
+                        <div class="row align-items-center">
+                          <div class="col-md-7">
                             <input type="file" accept="image/x-png,image/gif,image/jpeg" id="image" name="image" class="file-upload-default" >
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                                <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                               </span>
                             </div>
-                            <div style="color:#000099;font-size:14px;text-align:center;">
-                                Image Size  = Width : <font color="#FF0000">1030 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">560 px</font>
-                            </div>
                             <?php echo '<div class="text-danger">'.form_error('image').'</div>' ?>
+                            <div class="upload-specs-info mt-2">
+                              <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>1030 x 560 px</strong></span>
+                            </div>
                           </div>
                           <?php $img=base_url().'uploads/welcomenote/'.$photo; ?>
-                          <div class="col-md-4">
-                          <div class="form-group ">
-                            <label for="exampleInputName1">&nbsp;</label>
-                            <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank">
-                              <img id="previewbanner1" src="<?php echo  $img; ?>" width="70">
-                            </a>
-                          </div>
+                          <div class="col-md-5 text-center">
+                            <div class="upload-preview-box">
+                              <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                                <img id="previewbanner1" src="<?php echo $img; ?>" alt="Welcome Note Photo Preview">
+                              </a>
+                            </div>
                           </div>
                         </div>
                     </div>

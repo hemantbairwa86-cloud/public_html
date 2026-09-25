@@ -37,28 +37,33 @@
         echo form_open_multipart($action, array('id' => 'myForm','autocomplete' => 'off'));?>
                 <div class="form-group">
                   <label for="exampleInputName1">Trending Product Photo</label>
-                  <div class="row">
+                  <div class="row align-items-center mb-4">
                     <div class="col-md-6">
                       <input type="file" accept="image/x-png,image/gif,image/jpeg" class="file-upload-default" name="image">
                       <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                         <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                        <button class="file-upload-browse btn btn-info" type="button"><i class="fa fa-cloud-upload"></i> Upload Photo</button>
                         </span> </div>
                       <?php echo '<div class="text-danger">'.form_error('image').'</div>' ?>
-                      <?php 
-                        if(isset($id) && $id!="")
-                        {
-                          $img=base_url().'uploads/trending/'.$image;
-                        }
-                        else{
-                          $img=base_url().'uploads/book.png';
-                        }    ?>
-                      <div class="form-group">
-                        <input type="hidden" name="img_hidden" value="<?php echo $image; ?>">
-                        <label for="exampleInputName1">&nbsp;</label>
-                        <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank"> <img id="previewbanner1" src="<?php echo  $img; ?>" width="200"  class="p-1"> </a>
-                        <div style="color:#000099;font-size:14px;" class="p-1">Image Size  = Width : <font color="#FF0000">850 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">500 px</font></div>
+                    </div>
+                    <?php 
+                      if(isset($id) && $id!="")
+                      {
+                        $img=base_url().'uploads/trending/'.$image;
+                      }
+                      else{
+                        $img=base_url().'uploads/book.png';
+                      }    ?>
+                    <div class="col-md-6 text-center">
+                      <input type="hidden" name="img_hidden" value="<?php echo $image; ?>">
+                      <div class="upload-preview-box">
+                        <a id="previewbanner_link" href="<?php echo $img; ?>" target="_blank" title="Click to view full image">
+                          <img id="previewbanner1" src="<?php echo $img; ?>" alt="Trending Image Preview">
+                        </a>
+                      </div>
+                      <div class="upload-specs-info mt-2">
+                        <span><i class="fa fa-arrows-alt"></i> Dimensions: <strong>850 x 500 px</strong></span>
                       </div>
                     </div>
                   </div>
