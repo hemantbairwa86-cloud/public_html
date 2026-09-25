@@ -28,7 +28,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle nav-profile d-flex align-items-center" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
           <div class="profile-img-wrap" style="position: relative;">
-            <img src="<?php echo base_url(); ?>assest/administrator/images/faces/face1.jpg" alt="image" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.85); object-fit: cover;">
+            <img src="<?php echo base_url(); ?>assest/administrator/images/faces/default_male.jpg" alt="profile" style="width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.85); object-fit: cover;">
             <span class="online-status-dot"></span>
           </div>
           <span class="d-none d-lg-inline text-white font-weight-bold ml-2" style="font-size: 0.95rem;"><?php echo $this->session->userdata('VenusProductSession')->name; ?></span>

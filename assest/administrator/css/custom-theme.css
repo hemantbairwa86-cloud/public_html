@@ -907,6 +907,18 @@ a:focus {
   border-color: var(--admin-primary) !important;
 }
 
+/* Top Navbar Mini VP Badge */
+.mini-vp-badge {
+  background: #ffffff !important;
+  color: var(--admin-primary) !important;
+  font-weight: 800 !important;
+  font-size: 0.95rem !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  display: inline-block !important;
+}
+
 /* Mobile & Tablet Full Responsiveness */
 @media (max-width: 991.98px) {
   .content-wrapper {
@@ -915,6 +927,33 @@ a:focus {
 
   .card-body {
     padding: 1rem !important;
+  }
+
+  /* Top Navbar Adjustments for Mobile */
+  nav.navbar .navbar-brand-wrapper {
+    width: 140px !important;
+    padding: 0 4px !important;
+  }
+
+  .navbar .navbar-menu-wrapper {
+    width: calc(100% - 140px) !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .navbar-brand.brand-logo {
+    display: none !important;
+  }
+
+  .navbar-brand.brand-logo-mini {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .profile-img-wrap img {
+    width: 32px !important;
+    height: 32px !important;
   }
 
   /* Header Card Flex Controls & Action Buttons */
@@ -975,34 +1014,52 @@ a:focus {
     font-size: 0.8rem !important;
   }
 
-  /* Table Responsiveness */
-  .table-responsive {
-    border: 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  .table td, 
-  .table th {
-    white-space: nowrap !important;
-    font-size: 0.85rem !important;
-    padding: 10px 12px !important;
-  }
-
-  /* Top Navbar Adjustments */
-  nav.navbar .navbar-brand-wrapper {
-    width: 180px !important;
-  }
-
-  .navbar .navbar-menu-wrapper {
-    width: calc(100% - 180px) !important;
-  }
-
   /* Offcanvas Sidebar Responsiveness */
   .sidebar-offcanvas {
     top: 60px !important;
     bottom: 0 !important;
     height: calc(100vh - 60px) !important;
     z-index: 1050 !important;
+  }
+}
+
+/* Mobile Screen Table-to-Card Transformation (< 768px) */
+@media (max-width: 767.98px) {
+  .table-cards tbody,
+  .table-responsive .table.table-cards tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .table-cards thead,
+  .table-responsive .table.table-cards thead {
+    display: none !important;
+  }
+
+  .table-cards tbody tr,
+  .table-responsive .table.table-cards tbody tr {
+    display: block !important;
+    background: #ffffff !important;
+    border: 1px solid var(--admin-border-color) !important;
+    border-radius: 12px !important;
+    margin-bottom: 14px !important;
+    padding: 14px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .table-cards tbody td,
+  .table-responsive .table.table-cards tbody td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 0 !important;
+    border-top: 1px solid #f1f5f9 !important;
+    font-size: 0.88rem !important;
+  }
+
+  .table-cards tbody td:first-child,
+  .table-responsive .table.table-cards tbody td:first-child {
+    border-top: none !important;
   }
 }
 

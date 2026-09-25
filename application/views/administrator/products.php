@@ -35,7 +35,7 @@
               <div class="row">
                 <div class="col-12">
                   <div class="table-responsive">
-                  <table id="tbl_product" class="table">
+                  <table id="tbl_product" class="table table-cards">
                     <thead>
                       <tr>
                           <th>No</th>
