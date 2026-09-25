@@ -1063,6 +1063,113 @@ a:focus {
   }
 }
 
+/* ==========================================================================
+   Master Form UI, Upload Controls & Action Buttons Polish
+   ========================================================================== */
+
+/* File Upload Control Integration */
+.input-group .file-upload-info {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-right: none !important;
+}
+
+.input-group .file-upload-browse,
+.btn-upload {
+  background: linear-gradient(135deg, #179957 0%, #117a44 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  border: none !important;
+  padding: 9px 18px !important;
+  box-shadow: 0 2px 6px rgba(23, 153, 87, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.input-group .file-upload-browse:hover,
+.btn-upload:hover {
+  background: linear-gradient(135deg, #13844a 0%, #0e6337 100%) !important;
+  box-shadow: 0 4px 12px rgba(23, 153, 87, 0.35) !important;
+}
+
+/* Image Preview Styling */
+#file_preview,
+img.file-preview,
+.img-thumbnail-preview {
+  border-radius: 10px !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  padding: 4px !important;
+  background-color: #ffffff !important;
+}
+
+/* Helper Notes & File Dimension Specifications */
+p.text-danger,
+span.text-danger-note,
+.admin-spec-note {
+  background: #fff1f2 !important;
+  border: 1px solid #fecdd3 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-weight: 600 !important;
+  font-size: 0.84rem !important;
+  color: #be123c !important;
+  display: block !important;
+  margin-top: 10px !important;
+  margin-bottom: 14px !important;
+  line-height: 1.5 !important;
+}
+
+/* Table Action Buttons (Edit, Delete, Cancel) */
+.btn-outline-success,
+a.btn-outline-success,
+.btn-edit {
+  background-color: #f0fdf4 !important;
+  border: 1.5px solid #16a34a !important;
+  color: #15803d !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 5px 14px !important;
+  font-size: 0.84rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-outline-success:hover,
+a.btn-outline-success:hover,
+.btn-edit:hover {
+  background-color: #16a34a !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-outline-danger,
+a.btn-outline-danger,
+.btn-delete,
+.btn-cancel {
+  background-color: #fef2f2 !important;
+  border: 1.5px solid #dc2626 !important;
+  color: #b91c1c !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 5px 14px !important;
+  font-size: 0.84rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-outline-danger:hover,
+a.btn-outline-danger:hover,
+.btn-delete:hover,
+.btn-cancel:hover {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
 /* Small Mobile Phones (max-width: 575.98px) */
 @media (max-width: 575.98px) {
   .content-wrapper {
@@ -1071,6 +1178,7 @@ a:focus {
 
   .card {
     border-radius: 10px !important;
+    margin-bottom: 1rem !important;
   }
 
   .card-title {
@@ -1080,6 +1188,19 @@ a:focus {
   .btn {
     padding: 8px 14px !important;
     font-size: 0.85rem !important;
+  }
+
+  /* Form action buttons on small mobile screens */
+  form .d-flex,
+  .form-actions-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  form .d-flex .btn,
+  .form-actions-row .btn {
+    width: 100% !important;
+    margin-right: 0 !important;
   }
 
   /* Responsive Modal Windows */
