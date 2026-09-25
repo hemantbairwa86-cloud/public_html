@@ -1,10 +1,10 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row navbar-success">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-    <a class="navbar-brand brand-logo d-flex align-items-center justify-content-center" href="<?php echo base_url(); ?>administrator/dashboard" style="text-decoration:none;">
+    <a class="navbar-brand brand-logo d-none d-lg-flex align-items-center justify-content-center" href="<?php echo base_url(); ?>administrator/dashboard" style="text-decoration:none;">
       <img src="<?php echo base_url(); ?>assest/frontend/images/logo.svg" alt="logo" style="height: 30px; max-width: 140px; width: auto; background: #ffffff; padding: 3px 8px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.12);"/>
       <span class="brand-admin-tag ml-2">Admin</span>
     </a>
-    <a class="navbar-brand brand-logo-mini d-flex align-items-center justify-content-center" href="<?php echo base_url(); ?>administrator/dashboard">
+    <a class="navbar-brand brand-logo-mini d-flex d-lg-none align-items-center justify-content-center" href="<?php echo base_url(); ?>administrator/dashboard">
       <span class="mini-vp-badge">VP</span>
     </a>
   </div>
