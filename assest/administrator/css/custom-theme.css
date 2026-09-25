@@ -1189,6 +1189,110 @@ a.btn-outline-danger:hover,
   vertical-align: middle !important;
 }
 
+/* ==========================================================================
+   Perfect Status Toggle Switch UI Overhaul
+   ========================================================================== */
+.btn-toggle,
+.btn-toggle.btn-sm {
+  width: 90px !important;
+  height: 28px !important;
+  border-radius: 20px !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background-color: #cbd5e1 !important; /* Deactive background */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+  transition: background-color 0.25s ease !important;
+  cursor: pointer !important;
+  outline: none !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.btn-toggle.active,
+.btn-toggle.btn-sm.active {
+  background-color: #179957 !important; /* Active emerald background */
+}
+
+/* White Circular Handle Knob */
+.btn-toggle > .handle,
+.btn-toggle.btn-sm > .handle {
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) !important;
+  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  z-index: 2 !important;
+}
+
+.btn-toggle.active > .handle,
+.btn-toggle.btn-sm.active > .handle {
+  left: 65px !important; /* 90px width - 22px knob - 3px margin = 65px */
+}
+
+/* Active / Deactive Text Labels Inside Pill */
+.btn-toggle:before,
+.btn-toggle:after,
+.btn-toggle.btn-sm:before,
+.btn-toggle.btn-sm:after,
+.btn-toggle.btn-sm.btn-sm:before,
+.btn-toggle.btn-sm.btn-sm:after {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  z-index: 1 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+/* Deactive State Text (Shows DEACTIVE on the right of knob) */
+.btn-toggle:before,
+.btn-toggle.btn-sm:before,
+.btn-toggle.btn-sm.btn-sm:before {
+  content: 'DEACTIVE' !important;
+  left: 24px !important;
+  right: auto !important;
+  width: 63px !important;
+  text-align: center !important;
+  opacity: 1 !important;
+  color: #475569 !important;
+}
+
+/* Active State Text (Shows ACTIVE on the left of knob) */
+.btn-toggle:after,
+.btn-toggle.btn-sm:after,
+.btn-toggle.btn-sm.btn-sm:after {
+  content: 'ACTIVE' !important;
+  left: 5px !important;
+  right: auto !important;
+  width: 58px !important;
+  text-align: center !important;
+  opacity: 0 !important;
+  color: #ffffff !important;
+}
+
+.btn-toggle.active:before,
+.btn-toggle.btn-sm.active:before,
+.btn-toggle.btn-sm.btn-sm.active:before {
+  opacity: 0 !important;
+}
+
+.btn-toggle.active:after,
+.btn-toggle.btn-sm.active:after,
+.btn-toggle.btn-sm.btn-sm.active:after {
+  opacity: 1 !important;
+}
+
 /* Small Mobile Phones (max-width: 575.98px) */
 @media (max-width: 575.98px) {
   .content-wrapper {
