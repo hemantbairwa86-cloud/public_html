@@ -1025,41 +1025,89 @@ a:focus {
 
 /* Mobile Screen Table-to-Card Transformation (< 768px) */
 @media (max-width: 767.98px) {
-  .table-cards tbody,
-  .table-responsive .table.table-cards tbody {
+  .dataTables_wrapper table.dataTable,
+  .table-responsive table.table,
+  table.table-cards {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .dataTables_wrapper table.dataTable thead,
+  .table-responsive table.table thead {
+    display: none !important;
+  }
+
+  .dataTables_wrapper table.dataTable tbody,
+  .table-responsive table.table tbody {
     display: block !important;
     width: 100% !important;
   }
 
-  .table-cards thead,
-  .table-responsive .table.table-cards thead {
-    display: none !important;
-  }
-
-  .table-cards tbody tr,
-  .table-responsive .table.table-cards tbody tr {
+  .dataTables_wrapper table.dataTable tbody tr,
+  .table-responsive table.table tbody tr,
+  table.table-cards tbody tr {
     display: block !important;
     background: #ffffff !important;
-    border: 1px solid var(--admin-border-color) !important;
-    border-radius: 12px !important;
-    margin-bottom: 14px !important;
-    padding: 14px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+    border-radius: 16px !important;
+    padding: 16px 18px !important;
+    margin-bottom: 16px !important;
+    border: 1px solid rgba(23, 153, 87, 0.15) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+    position: relative !important;
   }
 
-  .table-cards tbody td,
-  .table-responsive .table.table-cards tbody td {
+  .dataTables_wrapper table.dataTable tbody tr:hover,
+  .table-responsive table.table tbody tr:hover,
+  table.table-cards tbody tr:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 28px rgba(23, 153, 87, 0.12) !important;
+    border-color: var(--admin-primary) !important;
+  }
+
+  .dataTables_wrapper table.dataTable tbody tr td,
+  .table-responsive table.table tbody tr td,
+  table.table-cards tbody tr td {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 8px 0 !important;
-    border-top: 1px solid #f1f5f9 !important;
-    font-size: 0.88rem !important;
+    padding: 10px 0 !important;
+    border: none !important;
+    border-bottom: 1px dashed #e2e8f0 !important;
+    font-size: 0.9rem !important;
+    color: #334155 !important;
+    text-align: right !important;
+    white-space: normal !important;
   }
 
-  .table-cards tbody td:first-child,
-  .table-responsive .table.table-cards tbody td:first-child {
-    border-top: none !important;
+  .dataTables_wrapper table.dataTable tbody tr td:last-child,
+  .table-responsive table.table tbody tr td:last-child,
+  table.table-cards tbody tr td:last-child {
+    border-bottom: none !important;
+    padding-top: 14px !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+
+  /* Automatic data labels for 7-column tables */
+  .table.table-cards tbody tr td:nth-child(1)::before { content: "No."; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .table.table-cards tbody tr td:nth-child(2)::before { content: "Image"; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .table.table-cards tbody tr td:nth-child(3)::before { content: "Category"; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .table.table-cards tbody tr td:nth-child(4)::before { content: "Name"; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .table.table-cards tbody tr td:nth-child(5)::before { content: "Code"; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .table.table-cards tbody tr td:nth-child(6)::before { content: "Status"; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .table.table-cards tbody tr td:nth-child(7)::before { content: "Actions"; font-weight: 700; color: #184d47; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; }
+
+  /* Product thumbnail image styling inside mobile card */
+  .table.table-cards tbody tr td img,
+  .dataTables_wrapper table.dataTable tbody tr td img {
+    max-height: 50px !important;
+    width: auto !important;
+    border-radius: 8px !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 2px !important;
+    background: #ffffff !important;
   }
 }
 
