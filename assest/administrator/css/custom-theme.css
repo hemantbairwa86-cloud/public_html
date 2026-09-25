@@ -1190,10 +1190,11 @@ a.btn-outline-danger:hover,
 }
 
 /* ==========================================================================
-   Perfect Status Toggle Switch UI Overhaul
+   Universal Status Toggle Switch UI (Covering all admin pages & variations)
    ========================================================================== */
 .btn-toggle,
-.btn-toggle.btn-sm {
+.btn-toggle.btn-sm,
+.btn-toggle.changestatus {
   width: 90px !important;
   height: 28px !important;
   border-radius: 20px !important;
@@ -1211,13 +1212,15 @@ a.btn-outline-danger:hover,
 }
 
 .btn-toggle.active,
-.btn-toggle.btn-sm.active {
+.btn-toggle.btn-sm.active,
+.btn-toggle.changestatus.active {
   background-color: #179957 !important; /* Active emerald background */
 }
 
 /* White Circular Handle Knob */
 .btn-toggle > .handle,
-.btn-toggle.btn-sm > .handle {
+.btn-toggle.btn-sm > .handle,
+.btn-toggle.changestatus > .handle {
   position: absolute !important;
   top: 3px !important;
   left: 3px !important;
@@ -1231,7 +1234,8 @@ a.btn-outline-danger:hover,
 }
 
 .btn-toggle.active > .handle,
-.btn-toggle.btn-sm.active > .handle {
+.btn-toggle.btn-sm.active > .handle,
+.btn-toggle.changestatus.active > .handle {
   left: 65px !important; /* 90px width - 22px knob - 3px margin = 65px */
 }
 
@@ -1240,6 +1244,8 @@ a.btn-outline-danger:hover,
 .btn-toggle:after,
 .btn-toggle.btn-sm:before,
 .btn-toggle.btn-sm:after,
+.btn-toggle.changestatus:before,
+.btn-toggle.changestatus:after,
 .btn-toggle.btn-sm.btn-sm:before,
 .btn-toggle.btn-sm.btn-sm:after {
   position: absolute !important;
@@ -1258,6 +1264,7 @@ a.btn-outline-danger:hover,
 /* Deactive State Text (Shows DEACTIVE on the right of knob) */
 .btn-toggle:before,
 .btn-toggle.btn-sm:before,
+.btn-toggle.changestatus:before,
 .btn-toggle.btn-sm.btn-sm:before {
   content: 'DEACTIVE' !important;
   left: 24px !important;
@@ -1271,6 +1278,7 @@ a.btn-outline-danger:hover,
 /* Active State Text (Shows ACTIVE on the left of knob) */
 .btn-toggle:after,
 .btn-toggle.btn-sm:after,
+.btn-toggle.changestatus:after,
 .btn-toggle.btn-sm.btn-sm:after {
   content: 'ACTIVE' !important;
   left: 5px !important;
@@ -1283,12 +1291,14 @@ a.btn-outline-danger:hover,
 
 .btn-toggle.active:before,
 .btn-toggle.btn-sm.active:before,
+.btn-toggle.changestatus.active:before,
 .btn-toggle.btn-sm.btn-sm.active:before {
   opacity: 0 !important;
 }
 
 .btn-toggle.active:after,
 .btn-toggle.btn-sm.active:after,
+.btn-toggle.changestatus.active:after,
 .btn-toggle.btn-sm.btn-sm.active:after {
   opacity: 1 !important;
 }
