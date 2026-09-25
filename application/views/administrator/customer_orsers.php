@@ -88,7 +88,7 @@
                               echo  '<label class="badge badge-danger">Failed</label>';
 
                             } ?></td>
-                            <td><?php echo '<a  href="'.$mylink.'" target="_blank" class="btn btn-outline-primary mb-2" >Print</a>&nbsp;&nbsp;<a  href="'.$detail.'" class="btn btn-outline-success" >Detail</a>' ; ?></td>
+                            <td><?php echo '<div class="action-btn-group"><a href="'.$mylink.'" target="_blank" class="btn btn-sm btn-outline-primary btn-action-icon" title="Print Invoice" data-toggle="tooltip"><i class="fa fa-print"></i></a><a href="'.$detail.'" class="btn btn-sm btn-outline-info btn-action-icon" title="View Order Details" data-toggle="tooltip"><i class="fa fa-eye"></i></a></div>'; ?></td>
                           </tr>
                           <?php $j++; } ?>
                         </tbody>

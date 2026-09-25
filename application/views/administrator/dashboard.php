@@ -98,8 +98,10 @@
                         <td><?php echo ucwords($val['billing_city']);?></td>
                         <td class="font-weight-bold text-success">₹<?php echo number_format($val['final_total'], 2);?></td>
                         <td>
-                          <a href="<?php echo base_url()."administrator/order/view/".md5($val['order_id']);?>" target="_blank" class="btn btn-sm btn-outline-primary mr-1"><i class="fa fa-print mr-1"></i> Print</a>
-                          <a href="<?php echo base_url()."administrator/order/detail/".md5($val['order_id']);?>" class="btn btn-sm btn-primary"><i class="fa fa-eye mr-1"></i> Detail</a>
+                          <div class="action-btn-group">
+                            <a href="<?php echo base_url()."administrator/order/view/".md5($val['order_id']);?>" target="_blank" class="btn btn-sm btn-outline-primary btn-action-icon" title="Print Invoice" data-toggle="tooltip"><i class="fa fa-print"></i></a>
+                            <a href="<?php echo base_url()."administrator/order/detail/".md5($val['order_id']);?>" class="btn btn-sm btn-outline-info btn-action-icon" title="View Order Details" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                          </div>
                         </td>
                       </tr>
                       <?php } } else { ?>

@@ -189,7 +189,7 @@ body, page[size="A4"] {
               <td style="text-align:left"><?php echo ucwords($v['ShippingCity']); ?></td>
               <td style="text-align:right"><?php echo $v['TotalValue']; ?></td>
               <td><?php echo $v['OrderStatus']; ?></td>
-              <td><?php  echo '<a href="'.$mylink.'" target="_blank" class="btn btn-outline-primary" >Print</a>' ; ?></td>
+              <td><?php  echo '<a href="'.$mylink.'" target="_blank" class="btn btn-sm btn-outline-primary btn-action-icon" title="Print Report" data-toggle="tooltip"><i class="fa fa-print"></i></a>' ; ?></td>
             </tr>
             <?php } } else {?>
             <tr>
