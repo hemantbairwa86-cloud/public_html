@@ -75,6 +75,7 @@ class Customer extends MY_Controller {
 
             } */
 
+            $nestedData[] = date('d M Y', strtotime($val['create_at']));
             $nestedData[] = '<a href="'.$mylink.'" class="btn btn-sm btn-outline-info btn-action-icon" title="View Customer Details" data-toggle="tooltip"><i class="fa fa-eye"></i></a>';            
             $data[] = $nestedData;
             $k++  ; 			
