@@ -574,7 +574,8 @@ class crud_model extends CI_Model{
 
 
     function GetFavoriteProductDetails($data=''){ 
-        $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name,c.name as collectionname,c.slug as cate_slug');
+        @$this->db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+        $this->db->select('f.id, f.customer_id, f.products_id, f.status, f.isdelete, p.name as pname, p.slug as pslug, p.productcode, MAX(pi.image_name) as image_name, c.name as collectionname, c.slug as cate_slug');
         $this->db->from('customer_favorite_products as f');
         $this->db->join('product as p','f.products_id=p.id','LEFT');
 		$this->db->join('category c','c.id = p.collectiontype','LEFT');
@@ -592,12 +593,12 @@ class crud_model extends CI_Model{
             $this->db->where('f.status','1');    
         }
         $this->db->where('f.isdelete','0');
+        $this->db->group_by(array('f.id', 'f.customer_id', 'f.products_id', 'f.status', 'f.isdelete', 'p.name', 'p.slug', 'p.productcode', 'c.name', 'c.slug'));
         if(isset($data['OrderBy']) and $data['OrderBy']!=''){
             $this->db->order_by($data['OrderBy'], $data['order']);
         }else{
              $this->db->order_by('f.id','DESC');
         }
-        $this->db->group_by('f.products_id');        
         if(isset($data['Limit']) and $data['Limit']!=''){
             $this->db->limit($data['Limit']);
         }

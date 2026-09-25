@@ -4,6 +4,7 @@ class MY_Controller extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		@$this->db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 		$this->load->helper('url');
 		$this->load->helper('common_function_helper');  
 		$this->load->library('image_lib'); //load library
