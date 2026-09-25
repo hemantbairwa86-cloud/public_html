@@ -1124,6 +1124,24 @@ a:focus {
     font-size: 0.88rem !important;
     color: #334155 !important;
     word-break: break-word !important;
+    text-align: right !important;
+  }
+
+  /* Key-Value Field Label Generator */
+  table.table > tbody > tr > td[data-label]::before,
+  .table-responsive > table > tbody > tr > td[data-label]::before,
+  .table-responsive > .table > tbody > tr > td[data-label]::before,
+  .table-cards tbody td[data-label]::before,
+  .dataTables_wrapper table.dataTable > tbody > tr > td[data-label]::before {
+    content: attr(data-label) !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    font-size: 0.78rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-right: 12px !important;
+    flex-shrink: 0 !important;
+    text-align: left !important;
   }
 
   /* First TD - Index / Sr No Pill Badge Header */

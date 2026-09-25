@@ -108,14 +108,41 @@
 	}
 	//END LOGOUT POPUP
 
-	// Auto Initialize Tooltips
+	// Auto Initialize Tooltips & Card View Data Labels
+	function applyTableCardLabels() {
+		$('table.table, .table-responsive table, .table-cards, .dataTable').each(function() {
+			var $table = $(this);
+			var headers = [];
+			$table.find('thead th').each(function() {
+				headers.push($(this).text().trim());
+			});
+			if (headers.length > 0) {
+				$table.find('tbody tr').each(function() {
+					$(this).children('td').each(function(index) {
+						if (headers[index] && !$(this).attr('data-label')) {
+							var label = headers[index];
+							if (label && label !== '#' && label !== 'SR NO.' && label !== 'SR. NO.' && label !== 'ACTION') {
+								$(this).attr('data-label', label);
+							}
+						}
+					});
+				});
+			}
+		});
+	}
+
 	$(document).ready(function() {
+		applyTableCardLabels();
 		if (typeof $.fn.tooltip !== 'undefined') {
 			$('[data-toggle="tooltip"]').tooltip({
 				container: 'body',
 				trigger: 'hover'
 			});
 		}
+	});
+
+	$(document).on('draw.dt page.dt search.dt order.dt', function() {
+		setTimeout(applyTableCardLabels, 150);
 	});
   </script>
 <style type="text/css">
