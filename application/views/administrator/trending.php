@@ -150,7 +150,7 @@
                             </button>
                             <?php } ?>
                           </td><?php */?>
-                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_trending/<?php echo $val['id']; ?>" class="mb-2"> <i class="fa fa-pencil"></i></a> </td>
+                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_trending/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Trending" data-toggle="tooltip"><i class="fa fa-pencil"></i></a></td>
                       </tr>
                       <?php
                       $i++;

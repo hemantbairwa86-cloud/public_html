@@ -89,9 +89,7 @@
                           </button>
                           <?php } ?>
                         </td>
-                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_weight/<?php echo $val['id']; ?>" class="btn btn-outline-primary mb-2">Edit</a>
-                          <?php /* &nbsp;&nbsp;<a href="javascript:void(0);" onClick="check_confirm_delete('<?php echo $val['id']; ?>');" class="btn btn-outline-danger">Delete</a> */ ?>
-                        </td>
+                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_weight/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Weight Variant" data-toggle="tooltip"><i class="fa fa-pencil"></i></a></td>
                       </tr>
                       <?php
                       $i++;

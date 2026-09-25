@@ -107,6 +107,16 @@
 	        })
 	}
 	//END LOGOUT POPUP
+
+	// Auto Initialize Tooltips
+	$(document).ready(function() {
+		if (typeof $.fn.tooltip !== 'undefined') {
+			$('[data-toggle="tooltip"]').tooltip({
+				container: 'body',
+				trigger: 'hover'
+			});
+		}
+	});
   </script>
 <style type="text/css">
 .loading {

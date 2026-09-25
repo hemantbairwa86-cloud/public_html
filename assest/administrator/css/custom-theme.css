@@ -1093,18 +1093,20 @@ a:focus {
     display: block !important;
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
+    border-left: 4px solid #10b981 !important;
     border-radius: 12px !important;
-    margin-bottom: 14px !important;
-    padding: 14px 16px !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
-    transition: all 0.2s ease !important;
+    margin-bottom: 16px !important;
+    padding: 16px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.25s ease !important;
     position: relative !important;
   }
 
   table.table > tbody > tr:hover,
   .table-cards tbody tr:hover {
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.1) !important;
+    box-shadow: 0 8px 22px rgba(16, 185, 129, 0.12) !important;
     border-color: #cbd5e1 !important;
+    transform: translateY(-2px) !important;
   }
 
   /* Convert each cell into a flex row */
@@ -1116,7 +1118,7 @@ a:focus {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 8px 0 !important;
+    padding: 10px 0 !important;
     border: none !important;
     border-top: 1px solid #f1f5f9 !important;
     font-size: 0.88rem !important;
@@ -1124,14 +1126,35 @@ a:focus {
     word-break: break-word !important;
   }
 
+  /* First TD - Index / Sr No Pill Badge Header */
   table.table > tbody > tr > td:first-child,
   .table-responsive > table > tbody > tr > td:first-child,
   .table-responsive > .table > tbody > tr > td:first-child,
   .table-cards tbody td:first-child {
     border-top: none !important;
     font-weight: 700 !important;
-    color: #0f172a !important;
-    padding-top: 0 !important;
+    color: #047857 !important;
+    font-size: 0.82rem !important;
+    background: #f0fdf4 !important;
+    padding: 3px 12px !important;
+    border-radius: 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: fit-content !important;
+    margin-bottom: 8px !important;
+    border: 1px solid #bbf7d0 !important;
+  }
+
+  table.table > tbody > tr > td img,
+  .table-cards tbody td img {
+    max-height: 48px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 3px !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
   }
 
   /* Action buttons row inside card footer */
@@ -1139,9 +1162,9 @@ a:focus {
   .table-responsive > table > tbody > tr > td:last-child,
   .table-responsive > .table > tbody > tr > td:last-child,
   .table-cards tbody td:last-child {
-    margin-top: 6px !important;
-    padding-top: 10px !important;
-    border-top: 1px dashed #e2e8f0 !important;
+    margin-top: 8px !important;
+    padding-top: 12px !important;
+    border-top: 1px dashed #cbd5e1 !important;
     justify-content: flex-end !important;
     gap: 8px !important;
   }
@@ -1403,11 +1426,40 @@ a.btn-outline-danger:hover,
 
 .action-btn-group .btn {
   margin: 0 !important;
-  height: 32px !important;
-  line-height: 1 !important;
+  height: 36px !important;
+  width: 36px !important;
+  padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  border-radius: 8px !important;
+}
+
+.btn-action-icon,
+.action-btn-group .btn {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  font-size: 0.95rem !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.btn-action-icon:hover,
+.action-btn-group .btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn-action-icon i,
+.action-btn-group .btn i {
+  margin: 0 !important;
+  font-size: 1rem !important;
 }
 
 .btn-outline-primary {
@@ -1415,7 +1467,7 @@ a.btn-outline-danger:hover,
   border: 1.5px solid #0284c7 !important;
   color: #0369a1 !important;
   font-weight: 600 !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   transition: all 0.2s ease !important;
 }
 
@@ -1424,6 +1476,26 @@ a.btn-outline-danger:hover,
   color: #ffffff !important;
   box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25) !important;
   transform: translateY(-1px) !important;
+}
+
+/* Tooltip Custom Styling */
+.tooltip-inner {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  padding: 5px 10px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: #0f172a !important;
+}
+.bs-tooltip-bottom .arrow::before,
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: #0f172a !important;
 }
 
 /* ==========================================================================

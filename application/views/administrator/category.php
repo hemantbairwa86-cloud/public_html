@@ -132,7 +132,7 @@
                           </button>
                           <?php } ?>
                         </td>
-                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_category/<?php echo $val['id']; ?>" class="btn btn-outline-primary">Edit</a> </td>
+                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_category/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Category" data-toggle="tooltip"><i class="fa fa-pencil"></i></a></td>
                       </tr>
                       <?php
 

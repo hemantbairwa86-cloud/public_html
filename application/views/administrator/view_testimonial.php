@@ -77,7 +77,12 @@
                               </button>
                           <?php } ?>
                           </td>
-                          <td><a href="<?php echo base_url(); ?>administrator/testimonial/editview/<?php echo $val['id']; ?>" class="btn btn-outline-primary">Edit</a>&nbsp;&nbsp;<a href="javascript:void(0);" onClick="check_confirm_delete('<?php echo $val['id']; ?>');" class="btn btn-outline-danger">Delete</a></td>
+                          <td>
+                            <div class="action-btn-group">
+                              <a href="<?php echo base_url(); ?>administrator/testimonial/editview/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Testimonial" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                              <a href="javascript:void(0);" onClick="check_confirm_delete('<?php echo $val['id']; ?>');" class="btn btn-sm btn-outline-danger btn-action-icon" title="Delete Testimonial" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
+                            </div>
+                          </td>
                       </tr>
                     <?php
 					           $i++;

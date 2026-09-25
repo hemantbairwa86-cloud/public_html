@@ -84,8 +84,7 @@
                           <?php } ?>
                           </td>
                           <td>
-                            <a href="<?php echo base_url(); ?>administrator/product/editview/<?php echo $val['id']; ?>" class="btn btn-outline-primary mb-2">Edit</a>&nbsp;&nbsp;
-                            <!-- <a href="javascript:void(0);" onClick="check_confirm_delete('<?php echo $val['id']; ?>');" class="btn btn-outline-danger">Delete</a> -->
+                            <a href="<?php echo base_url(); ?>administrator/product/editview/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Product" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                           </td>
                       </tr>
                     <?php
