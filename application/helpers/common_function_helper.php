@@ -501,8 +501,8 @@ function getCustomerDetails($uid)
       $ci = &get_instance();
       $ci->db->select("u.*,c.name as country_name,s.name as state_name");
       $ci->db->from('users u');
-      $ci->db->join('own_countries c', 'u.country = c.id');
-      $ci->db->join('own_states s', 'u.state = s.id');
+      $ci->db->join('own_countries c', 'u.country = c.id', 'left');
+      $ci->db->join('own_states s', 'u.state = s.id', 'left');
       $ci->db->where("u.id",$uid);
       $query = $ci->db->get();
       $res = $query->row_array();

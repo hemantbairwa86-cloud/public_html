@@ -1,4 +1,7 @@
-<?php $loginuser = getCustomerDetails($this->session->userdata('user_front_session')['id']); 
+<?php 
+  $user_sess = $this->session->userdata('user_front_session');
+  $user_id = (is_array($user_sess) && isset($user_sess['id'])) ? $user_sess['id'] : 0;
+  $loginuser = getCustomerDetails($user_id); 
 
   $act_tab="dashboard";
   if($this->session->flashdata('active') && $this->session->flashdata('active')=="address")

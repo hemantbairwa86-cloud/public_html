@@ -15,12 +15,14 @@ class Dashboard extends MY_Controller {
 		else
 		{		
 		$this->data['title'] = "Dashboard";
-		$this->data['customer_detail'] = $this->Crud_Model->getById($_SESSION['user_front_session']['id'],'id','users');
-		$this->data['order_list'] = $this->Crud_Model->getDatafromtablewhere('customer_bill',array('customer_id'=>$_SESSION['user_front_session']['id'],'paid_status'=>1),'desc');
-		$this->data['user_address']=$this->Crud_Model->Getuseraddress(array('user_id'=>$_SESSION['user_front_session']['id']));
+		$user_sess = $this->session->userdata('user_front_session');
+		$user_id = (is_array($user_sess) && isset($user_sess['id'])) ? $user_sess['id'] : (isset($_SESSION['user_front_session']['id']) ? $_SESSION['user_front_session']['id'] : 0);
+
+		$this->data['customer_detail'] = $this->Crud_Model->getById($user_id,'id','users');
+		$this->data['order_list'] = $this->Crud_Model->getDatafromtablewhere('customer_bill',array('customer_id'=>$user_id,'paid_status'=>1),'desc');
+		$this->data['user_address']=$this->Crud_Model->Getuseraddress(array('user_id'=>$user_id));
 		$this->data['state_list']=$this->Crud_Model->getDatafromtablewhere('own_states',array('country_id'=>101));
-			
-		$this->data['FavoriteProductDetails']=$this->Crud_Model->GetFavoriteProductDetails(array('customer_id'=>$this->session->userdata('user_front_session')['id']));	
+		$this->data['FavoriteProductDetails']=$this->Crud_Model->GetFavoriteProductDetails(array('customer_id'=>$user_id));	
 			
 			//$this->data['order_list']=$this->db->select("*")->from('orders')->where('CustomerID',$this->session->userdata('user_front_session')['id'])->order_by("OrderID", "desc")->get()->result_array();			
 		
