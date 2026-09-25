@@ -672,17 +672,180 @@ nav.navbar {
   margin: 0;
 }
 
-/* Form Controls */
-.form-control {
+/* Form Controls & Modern Input System (Fix dull gray inputs & selects) */
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea,
+.custom-select,
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border: 1.5px solid #cbd5e1 !important;
   border-radius: 8px !important;
-  border: 1px solid #dcdfe6 !important;
-  padding: 10px 14px !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  padding: 8px 14px !important;
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  height: auto !important;
+  min-height: 40px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
-.form-control:focus {
+/* Select dropdown specific arrow styling */
+select,
+.custom-select,
+.dataTables_wrapper .dataTables_length select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23179957' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 12px center !important;
+  background-size: 14px 10px !important;
+  padding-right: 36px !important;
+}
+
+/* Hover & Focus States */
+.form-control:hover,
+input:hover,
+select:hover,
+textarea:hover,
+.dataTables_wrapper .dataTables_length select:hover,
+.dataTables_wrapper .dataTables_filter input:hover {
+  border-color: #94a3b8 !important;
+}
+
+.form-control:focus,
+input:focus,
+select:focus,
+textarea:focus,
+.dataTables_wrapper .dataTables_length select:focus,
+.dataTables_wrapper .dataTables_filter input:focus {
+  background-color: #ffffff !important;
   border-color: var(--admin-primary) !important;
-  box-shadow: 0 0 0 3px rgba(23, 153, 87, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(23, 153, 87, 0.18) !important;
+  outline: 0 !important;
+}
+
+/* DataTables Specific Controls Formatting */
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  text-align: right;
+}
+
+.dataTables_wrapper .dataTables_filter label,
+.dataTables_wrapper .dataTables_length label {
+  color: #475569 !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  margin-left: 6px !important;
+  width: 220px !important;
+}
+
+.dataTables_wrapper .dataTables_length select {
+  width: 75px !important;
+}
+
+/* Card, Header & Action Buttons */
+.card {
+  border-radius: 14px !important;
+  border: 1px solid var(--admin-border-color) !important;
+  box-shadow: var(--admin-shadow-sm) !important;
+  overflow: hidden !important;
+}
+
+.card .card-title {
+  color: var(--admin-primary-dark) !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+}
+
+.btn-success,
+.btn-primary,
+.btn-emerald {
+  background: linear-gradient(135deg, #179957 0%, #117a44 100%) !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 9px 20px !important;
+  box-shadow: 0 4px 12px rgba(23, 153, 87, 0.25) !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-success:hover,
+.btn-primary:hover,
+.btn-emerald:hover {
+  background: linear-gradient(135deg, #13844a 0%, #0e6337 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(23, 153, 87, 0.35) !important;
+}
+
+/* Table Styling Overrides */
+.table {
+  width: 100% !important;
+  margin-bottom: 1rem !important;
+  color: #334155 !important;
+}
+
+.table thead th {
+  background-color: #f0fdf4 !important;
+  color: #14532d !important;
+  font-weight: 700 !important;
+  font-size: 0.82rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  border-bottom: 2px solid #dcfce7 !important;
+  padding: 14px 16px !important;
+}
+
+.table td {
+  padding: 14px 16px !important;
+  vertical-align: middle !important;
+  border-top: 1px solid #f1f5f9 !important;
+}
+
+.table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Status Badges */
+.badge-success,
+.badge-active {
+  background-color: #dcfce7 !important;
+  color: #15803d !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.badge-danger,
+.badge-deactive {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+  font-weight: 700 !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  border: 1px solid #fecaca !important;
 }
 
 /* Auth / Login Page Styling */
@@ -734,4 +897,33 @@ a:focus {
   color: var(--admin-primary) !important;
   background-color: var(--admin-primary-light) !important;
   border-color: var(--admin-primary) !important;
+}
+
+/* Mobile & Tablet Full Responsiveness */
+@media (max-width: 991.98px) {
+  .content-wrapper {
+    padding: 1.2rem 1rem !important;
+  }
+
+  .card-body {
+    padding: 1.25rem !important;
+  }
+
+  .dataTables_wrapper .dataTables_length,
+  .dataTables_wrapper .dataTables_filter {
+    float: none !important;
+    text-align: left !important;
+    margin-bottom: 12px !important;
+  }
+
+  .dataTables_wrapper .dataTables_filter input {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .table-responsive,
+  .dataTables_wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
 }
