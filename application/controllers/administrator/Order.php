@@ -62,7 +62,7 @@ class order extends MY_Controller {
 				$nestedData[] = '<label class="badge badge-danger">Failed</label>';
 
 			}
-			$nestedData[] = '<a  href="'.$mylink.'" target="_blank" class="btn btn-outline-primary mb-2" >Print</a>&nbsp;&nbsp;<a  href="'.$detail.'" class="btn btn-outline-success" >Detail</a>';            
+			$nestedData[] = '<div class="action-btn-group"><a href="'.$mylink.'" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fa fa-print mr-1"></i>Print</a><a href="'.$detail.'" class="btn btn-sm btn-outline-success"><i class="fa fa-eye mr-1"></i>Detail</a></div>';            
             $data[] = $nestedData;
             $k++  ; 			
         }
