@@ -485,8 +485,7 @@ class Product extends MY_Controller  {
             }else{
             	$nestedData[]='<button type="button" class="btn btn-sm btn-toggle" onClick="change_status(this);" data-table="product" data-field="status" data-id-name="id" data-id="'.$value['id'].'" data-toggle="button" aria-pressed="0" id="sts_btn_'.$value['id'].'" autocomplete="off"><div class="handle"></div></button>';
             }
-            $edit_url = base_url().'administrator/product/editview/'.$value['id'];
-            $nestedData[] = '<a href="'.$edit_url.'" class="btn  btn-sm btn-outline-primary mr-2 mb-2">Edit</a>'; 
+            $nestedData[] = '<a href="'.$edit_url.'" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Product" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>'; 
             $data[] = $nestedData;
             $k++; 
         }

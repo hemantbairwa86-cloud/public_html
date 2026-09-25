@@ -96,7 +96,7 @@ class Rating extends MY_Controller {
 			$nestedData[] = !empty($val['full_name']) ? $val['full_name'] : '-';
 			$nestedData[] = !empty($val['city']) ? $val['city'] : '-';
 			$nestedData[] = $status;
-			$nestedData[] = '<a href="'.$mylink.'" class="btn btn-outline-primary btn-sm">View</a>&nbsp;<a href="javascript:void(0);" onClick="check_confirm_delete('.$val['id'].');" class="btn btn-outline-danger btn-sm">Delete</a>';            
+			$nestedData[] = '<div class="action-btn-group"><a href="'.$mylink.'" class="btn btn-sm btn-outline-info btn-action-icon" title="View Rating Details" data-toggle="tooltip"><i class="fa fa-eye"></i></a><a href="javascript:void(0);" onClick="check_confirm_delete('.$val['id'].');" class="btn btn-sm btn-outline-danger btn-action-icon" title="Delete Rating" data-toggle="tooltip"><i class="fa fa-trash"></i></a></div>';            
 			$data[] = $nestedData;
 			$k++; 			
 		}
