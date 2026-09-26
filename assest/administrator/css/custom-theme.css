@@ -1752,3 +1752,195 @@ a.btn-outline-danger:hover,
   line-height: 1 !important;
 }
 
+/* ==========================================================================
+   Comprehensive Device Responsiveness (Desktop, Laptop, Tablet & Mobile)
+   ========================================================================== */
+
+/* 1. Ultra-Wide & Large Desktop Displays (min-width: 1400px) */
+@media (min-width: 1400px) {
+  .content-wrapper {
+    padding: 2.2rem 3rem !important;
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+
+  .card .card-body {
+    padding: 2rem 2.4rem !important;
+  }
+
+  .table td, .table th {
+    padding: 14px 20px !important;
+  }
+
+  .form-control, .select2-container, select.form-control {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* 2. Standard Desktop & Laptop Displays (min-width: 992px) and (max-width: 1399.98px) */
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  .content-wrapper {
+    padding: 1.6rem 1.8rem !important;
+  }
+
+  .card .card-body {
+    padding: 1.4rem 1.6rem !important;
+  }
+
+  .table td, .table th {
+    padding: 10px 14px !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* 3. Tablet Displays (min-width: 768px) and (max-width: 991.98px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .content-wrapper {
+    padding: 1.25rem 1.25rem !important;
+  }
+
+  .card .card-body {
+    padding: 1.25rem 1.25rem !important;
+  }
+
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+  }
+
+  .navbar .navbar-menu-wrapper {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem !important;
+  }
+}
+
+/* 4. Mobile Devices (max-width: 767.98px) */
+@media (max-width: 767.98px) {
+  .content-wrapper {
+    padding: 0.85rem 0.65rem !important;
+  }
+
+  .card {
+    border-radius: 10px !important;
+    margin-bottom: 1.1rem !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .card .card-body {
+    padding: 1rem 0.9rem !important;
+  }
+
+  .card-title {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  /* Full Width Buttons on Mobile */
+  .btn:not(.btn-sm):not(.btn-action-icon) {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+    padding: 10px 16px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .btn.pull-right, .btn.float-right {
+    float: none !important;
+  }
+
+  /* Responsive Form Row Actions */
+  .row.mt-2.align-items-center.py-1,
+  form .d-flex,
+  .form-actions-row {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 10px !important;
+  }
+
+  .row.mt-2.align-items-center.py-1 .col-md-12 {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 10px !important;
+  }
+
+  .row.mt-2.align-items-center.py-1 .btn {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* DataTables Mobile Controls */
+  .dataTables_wrapper .dataTables_length,
+  .dataTables_wrapper .dataTables_filter,
+  .dataTables_wrapper .dataTables_info,
+  .dataTables_wrapper .dataTables_paginate {
+    text-align: center !important;
+    float: none !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dataTables_wrapper .dataTables_filter input {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 5px !important;
+  }
+
+  .table-responsive {
+    border: none !important;
+    margin-bottom: 1rem !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table th, .table td {
+    white-space: nowrap !important;
+    padding: 10px 12px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Header & Navigation Bar Responsiveness */
+  .navbar .navbar-brand-wrapper {
+    width: 60px !important;
+  }
+
+  .navbar .navbar-brand-wrapper .brand-logo-mini {
+    display: flex !important;
+  }
+
+  .navbar .navbar-menu-wrapper {
+    width: calc(100% - 60px) !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .navbar .navbar-menu-wrapper .btn-header-visit span {
+    display: none !important;
+  }
+
+  /* Modals on Mobile Devices */
+  .modal-dialog {
+    margin: 0.4rem !important;
+    max-width: calc(100% - 0.8rem) !important;
+  }
+
+  .modal-body {
+    padding: 0.9rem !important;
+  }
+
+  /* Image Upload & Thumbnails Grid on Mobile */
+  .upload-preview-box,
+  .image-preview-card {
+    padding: 8px !important;
+    margin: 6px 0 !important;
+  }
+
+  .upload-preview-box img,
+  .image-preview-card img {
+    max-height: 100px !important;
+  }
+}
+
