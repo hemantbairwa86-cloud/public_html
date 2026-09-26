@@ -118,12 +118,26 @@
                     <?php
                             if(!empty($image))
                             {
-                              foreach ($image as $key => $value) { ?>
+                              foreach ($image as $key => $value) { 
+                                $thumb_rel = 'uploads/product/thumbnails/'.$value['image_name'];
+                                $main_rel = 'uploads/product/'.$value['image_name'];
+                                if (!file_exists($thumb_rel) && file_exists($main_rel)) {
+                                    @copy($main_rel, $thumb_rel);
+                                }
+                                if (file_exists($thumb_rel)) {
+                                    $img_src = base_url().$thumb_rel;
+                                } elseif (file_exists($main_rel)) {
+                                    $img_src = base_url().$main_rel;
+                                } else {
+                                    $img_src = base_url().'uploads/product/noimage.jpg';
+                                }
+                                $link_href = file_exists($main_rel) ? base_url().$main_rel : $img_src;
+                    ?>
                     <div class="col-6 col-sm-4 col-md-3 mb-3" id="productimage<?php echo $value['id']; ?>">
                       <div class="preview-card-item text-center"> 
                         <div class="preview-img-wrapper">
-                          <a href="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" target="_blank" title="Click to view full image">
-                            <img src="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" alt="Product Thumbnail">
+                          <a href="<?php echo $link_href; ?>" target="_blank" title="Click to view full image">
+                            <img src="<?php echo $img_src; ?>" alt="Product Thumbnail">
                           </a>
                         </div>
                         <div class="preview-details">

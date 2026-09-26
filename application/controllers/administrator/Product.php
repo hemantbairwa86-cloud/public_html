@@ -107,20 +107,35 @@ class Product extends MY_Controller  {
 					if($ImageCount > 0)
 					{
 				        for($i = 0; $i < $ImageCount; $i++){
-				            $_FILES['file']['name']       = $_FILES['image_name']['name'][$i];
-				            $_FILES['file']['type']       = $_FILES['image_name']['type'][$i];
-				            $_FILES['file']['tmp_name']   = $_FILES['image_name']['tmp_name'][$i];
-				            $_FILES['file']['error']      = $_FILES['image_name']['error'][$i];
-				            $_FILES['file']['size']       = $_FILES['image_name']['size'][$i];
-			                // Uploaded file data
-			                $ext=pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
-			                $image_name = rand(11111,99999).".".$ext;
-							$isupload = compress($file_tmp=$_FILES["file"]["tmp_name"],'uploads/product/'.$image_name, 95);
-							$upload_dir_thumb = 'uploads/product/thumbnails/';
-							square_crop($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir_thumb.$image_name, 550);
-			                $uploadImgData['product_id'] = $ProductId;
-			                $uploadImgData['image_name'] = $image_name;
-			                $this->Crud_Model->InsertData('product_image',$uploadImgData);
+				            if(empty($_FILES['image_name']['name'][$i])) continue;
+				            $tmp_name = $_FILES['image_name']['tmp_name'][$i];
+				            if(empty($tmp_name)) continue;
+
+				            $ext = pathinfo($_FILES['image_name']['name'][$i], PATHINFO_EXTENSION);
+				            if(empty($ext)) $ext = 'jpg';
+				            $image_name = rand(11111,99999).".".$ext;
+							$target_main = 'uploads/product/'.$image_name;
+							$target_thumb = 'uploads/product/thumbnails/'.$image_name;
+
+							$saved = false;
+							if (is_uploaded_file($tmp_name)) {
+								$saved = @move_uploaded_file($tmp_name, $target_main);
+							}
+							if (!$saved) {
+								$saved = @copy($tmp_name, $target_main);
+							}
+
+							if ($saved && file_exists($target_main)) {
+								compress($target_main, $target_main, 95);
+								square_crop($target_main, $target_thumb, 550);
+								if (!file_exists($target_thumb) && file_exists($target_main)) {
+									@copy($target_main, $target_thumb);
+								}
+				                $uploadImgData = array();
+				                $uploadImgData['product_id'] = $ProductId;
+				                $uploadImgData['image_name'] = $image_name;
+				                $this->Crud_Model->InsertData('product_image',$uploadImgData);
+							}
 				        }
 				    }
 				}
@@ -312,20 +327,35 @@ class Product extends MY_Controller  {
 						if($ImageCount > 0)
 						{
 					        for($i = 0; $i < $ImageCount; $i++){
-					            $_FILES['file']['name']       = $_FILES['image_name']['name'][$i];
-					            $_FILES['file']['type']       = $_FILES['image_name']['type'][$i];
-					            $_FILES['file']['tmp_name']   = $_FILES['image_name']['tmp_name'][$i];
-					            $_FILES['file']['error']      = $_FILES['image_name']['error'][$i];
-					            $_FILES['file']['size']       = $_FILES['image_name']['size'][$i];
-				                // Uploaded file data
-				                $ext=pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
-				                $image_name = rand(11111,99999).".".$ext;
-								$isupload = compress($file_tmp=$_FILES["file"]["tmp_name"],'uploads/product/'.$image_name, 95);
-								$upload_dir_thumb = 'uploads/product/thumbnails/';
-								square_crop($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir_thumb.$image_name, 550);
-				                $uploadImgData['product_id'] = $ProductId;
-				                $uploadImgData['image_name'] = $image_name;
-				                $this->Crud_Model->InsertData('product_image',$uploadImgData);
+					            if(empty($_FILES['image_name']['name'][$i])) continue;
+					            $tmp_name = $_FILES['image_name']['tmp_name'][$i];
+					            if(empty($tmp_name)) continue;
+
+					            $ext = pathinfo($_FILES['image_name']['name'][$i], PATHINFO_EXTENSION);
+					            if(empty($ext)) $ext = 'jpg';
+					            $image_name = rand(11111,99999).".".$ext;
+								$target_main = 'uploads/product/'.$image_name;
+								$target_thumb = 'uploads/product/thumbnails/'.$image_name;
+
+								$saved = false;
+								if (is_uploaded_file($tmp_name)) {
+									$saved = @move_uploaded_file($tmp_name, $target_main);
+								}
+								if (!$saved) {
+									$saved = @copy($tmp_name, $target_main);
+								}
+
+								if ($saved && file_exists($target_main)) {
+									compress($target_main, $target_main, 95);
+									square_crop($target_main, $target_thumb, 550);
+									if (!file_exists($target_thumb) && file_exists($target_main)) {
+										@copy($target_main, $target_thumb);
+									}
+					                $uploadImgData = array();
+					                $uploadImgData['product_id'] = $ProductId;
+					                $uploadImgData['image_name'] = $image_name;
+					                $this->Crud_Model->InsertData('product_image',$uploadImgData);
+								}
 					        }
 					    }
 					}
