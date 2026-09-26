@@ -1719,3 +1719,36 @@ a.btn-outline-danger:hover,
     padding: 1rem !important;
   }
 }
+
+/* Back Button Universal Component Styling */
+.btn-back,
+.btn-vp-back,
+.btn-secondary,
+.btn-outline-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+
+.btn-back i,
+.btn-vp-back i,
+.btn-secondary i,
+.btn-outline-secondary i {
+  display: inline-block !important;
+  margin: 0 !important;
+  font-size: 0.95em !important;
+  line-height: 1 !important;
+}
+
+.btn-back span,
+.btn-vp-back span,
+.btn-secondary span,
+.btn-outline-secondary span {
+  display: inline-block !important;
+  line-height: 1 !important;
+}
+

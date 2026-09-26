@@ -369,13 +369,26 @@ $initial_mode = isset($initial_mode) ? $initial_mode : 'login';
   border-radius: 8px;
   font-weight: 700;
   font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  gap: 8px;
   cursor: pointer;
   box-shadow: 0 8px 18px rgba(19, 77, 71, 0.2);
   transition: all 0.25s ease;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+}
+.btn-vp-action i {
+  display: inline-block !important;
+  font-size: 1rem !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.btn-vp-action span {
+  display: inline-block !important;
+  line-height: 1 !important;
 }
 .btn-vp-action:hover {
   background: linear-gradient(135deg, var(--vp-brand-dark) 0%, var(--vp-brand-green) 100%);
@@ -388,13 +401,41 @@ $initial_mode = isset($initial_mode) ? $initial_mode : 'login';
   height: 48px;
   background: #e2ece8;
   color: var(--vp-brand-green);
-  border: none;
+  border: 1.5px solid #c9ded7;
   border-radius: 8px;
   font-weight: 700;
   font-size: 0.95rem;
-  padding: 0 20px;
+  padding: 0 24px;
   cursor: pointer;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  gap: 8px;
+  white-space: nowrap !important;
+  line-height: 1 !important;
   transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(19, 77, 71, 0.05);
+}
+.btn-vp-secondary i {
+  display: inline-block !important;
+  font-size: 0.95rem !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.btn-vp-secondary span {
+  display: inline-block !important;
+  line-height: 1 !important;
+}
+.btn-vp-secondary:hover {
+  background: #d4e7e0;
+  color: var(--vp-brand-dark);
+  border-color: var(--vp-brand-green);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(19, 77, 71, 0.12);
+}
+.btn-vp-secondary:active {
+  transform: translateY(0);
 }
 
 .auth-switch-prompt {
@@ -694,7 +735,7 @@ $initial_mode = isset($initial_mode) ? $initial_mode : 'login';
 
                 <div class="mt-4">
                   <button type="button" class="btn-vp-action" onclick="goToRegStep(2)">
-                    Continue to Address Details <i class="fa fa-arrow-right ms-1"></i>
+                    <span>Continue to Address Details</span> <i class="fa fa-arrow-right"></i>
                   </button>
                 </div>
               </div>
@@ -828,12 +869,12 @@ $initial_mode = isset($initial_mode) ? $initial_mode : 'login';
                   </div>
                 </div>
 
-                <div class="d-flex gap-3 mt-4">
+                <div class="d-flex align-items-center gap-3 mt-4">
                   <button type="button" class="btn-vp-secondary" onclick="goToRegStep(1)">
-                    <i class="fa fa-arrow-left me-1"></i> Back
+                    <i class="fa fa-arrow-left"></i> <span>Back</span>
                   </button>
                   <button type="submit" class="btn-vp-action flex-grow-1" id="btn_submit">
-                    Complete Registration <i class="fa fa-check-circle ms-1"></i>
+                    <span>Complete Registration</span> <i class="fa fa-check-circle"></i>
                   </button>
                 </div>
               </div>
