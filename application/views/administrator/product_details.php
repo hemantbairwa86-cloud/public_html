@@ -329,58 +329,82 @@
       	$(document).ready(function(){    
     		$(".loading").attr('style',"display: none;");
     	});
+	 function showInlineError($el, message) {
+	    $el.addClass('border-danger').css('border-color', '#dc3545');
+	    var $parent = $el.closest('.form-group, td');
+	    if (!$parent.find('.js-error-msg').length) {
+	        $parent.append('<div class="text-danger js-error-msg mt-1" style="font-size:0.85rem; font-weight:600;"><i class="fa fa-exclamation-circle mr-1"></i> ' + message + '</div>');
+	    }
+	 }
+
+	 function clearInlineErrors() {
+	    $('.js-error-msg').remove();
+	    $('.form-control, select, input').removeClass('border-danger').css('border-color', '');
+	 }
+
+	 $(document).on('change input', '.form-control, select, input', function() {
+	    $(this).removeClass('border-danger').css('border-color', '');
+	    $(this).closest('.form-group, td').find('.js-error-msg').remove();
+	 });
+
 	 function validate() {
+	    clearInlineErrors();
+	    var isValid = true;
+	    var $firstErrorEl = null;
+
 	    var collectiontype = $('#collectiontype').val();
 	    var name = $.trim($('#name').val());
 	    var productcode = $.trim($('#productcode').val());
 	    var isEdit = $('#id').val() !== '' && $('#id').val() !== '0';
-	    var hasExistingImages = $('#existing_file_previews .upload-preview-box').length > 0;
+	    var hasExistingImages = $('#existing_file_previews .preview-card-item, #existing_file_previews .upload-preview-box').length > 0;
 	    var fileInput = $('.file-upload-default')[0];
 	    var hasNewImages = fileInput && fileInput.files && fileInput.files.length > 0;
 
 	    if (!collectiontype) {
-	        if (typeof swal !== 'undefined') { swal('Required', 'Please select a Category.', 'warning'); }
-	        $('#collectiontype').focus();
-	        return false;
+	        showInlineError($('#collectiontype'), 'Please select a Category.');
+	        isValid = false;
+	        if (!$firstErrorEl) $firstErrorEl = $('#collectiontype');
 	    }
 	    if (!name) {
-	        if (typeof swal !== 'undefined') { swal('Required', 'Please enter a Product Name.', 'warning'); }
-	        $('#name').focus();
-	        return false;
+	        showInlineError($('#name'), 'Please enter a Product Name.');
+	        isValid = false;
+	        if (!$firstErrorEl) $firstErrorEl = $('#name');
 	    }
 	    if (!productcode) {
-	        if (typeof swal !== 'undefined') { swal('Required', 'Please enter a Product Code.', 'warning'); }
-	        $('#productcode').focus();
-	        return false;
+	        showInlineError($('#productcode'), 'Please enter a Product Code.');
+	        isValid = false;
+	        if (!$firstErrorEl) $firstErrorEl = $('#productcode');
 	    }
 	    if (!isEdit && !hasExistingImages && !hasNewImages) {
-	        if (typeof swal !== 'undefined') { swal('Required', 'Please select at least one Product Image to upload.', 'warning'); }
-	        return false;
+	        showInlineError($('.file-upload-info').length ? $('.file-upload-info') : $('.file-upload-default'), 'Please select at least one Product Image to upload.');
+	        isValid = false;
+	        if (!$firstErrorEl) $firstErrorEl = $('.file-upload-browse').length ? $('.file-upload-browse') : $('.file-upload-default');
 	    }
 
-	    var weightValid = true;
 	    $('select[name="sel_weight[]"]').each(function() {
 	        if (!$(this).val()) {
-	            weightValid = false;
+	            showInlineError($(this), 'Please select Weight.');
+	            isValid = false;
+	            if (!$firstErrorEl) $firstErrorEl = $(this);
 	        }
 	    });
-	    if (!weightValid) {
-	        if (typeof swal !== 'undefined') { swal('Required', 'Please select a Weight for all price variants.', 'warning'); }
-	        return false;
-	    }
 
-	    var priceValid = true;
 	    $('input[name="txt_new_price[]"]').each(function() {
 	        if (!$.trim($(this).val())) {
-	            priceValid = false;
+	            showInlineError($(this), 'Please enter M.R.P.');
+	            isValid = false;
+	            if (!$firstErrorEl) $firstErrorEl = $(this);
 	        }
 	    });
-	    if (!priceValid) {
-	        if (typeof swal !== 'undefined') { swal('Required', 'Please enter a valid M.R.P. price for all variants.', 'warning'); }
-	        return false;
+
+	    if (!isValid && $firstErrorEl) {
+	        $('html, body').animate({
+	            scrollTop: $firstErrorEl.offset().top - 120
+	        }, 400);
+	        $firstErrorEl.focus();
 	    }
 
-	    return true;
+	    return isValid;
 	 }
 	 $("#myForm").on('submit',function(){
 		if (validate()) {
