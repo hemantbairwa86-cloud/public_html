@@ -56,18 +56,25 @@ class Advertisement extends MY_Controller {
 				    }
 				    else
 				    {
-						$upload_dir = 'uploads/advertisement/';
-						//$upload_dir_thumb = 'uploads/advertisement/thumb/';
+						$upload_dir = FCPATH . 'uploads/advertisement/';
+						if (!is_dir($upload_dir)) @mkdir($upload_dir, 0777, true);
 						$file_name=$_FILES["file"]["name"];
 						$file_tmp=$_FILES["file"]["tmp_name"];
 						$ext=pathinfo($file_name,PATHINFO_EXTENSION);
 						$file_name =pathinfo($file_name,PATHINFO_FILENAME);
 						$file_name = slugify($file_name);
 						$new_name = rand(11111,99999).".".$ext;
-						$isupload = compress($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir.$new_name, 30);
-						//square_crop($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir_thumb.$new_name, 400);
-						if($isupload)
-						{
+						$target_file = $upload_dir . $new_name;
+
+						$saved = false;
+						if (is_uploaded_file($file_tmp)) {
+							$saved = @move_uploaded_file($file_tmp, $target_file);
+						}
+						if (!$saved) {
+							$saved = @copy($file_tmp, $target_file);
+						}
+						if ($saved && file_exists($target_file)) {
+							compress($target_file, $target_file, 90);
 							$data['image'] = $new_name;
 						}
 					}
@@ -142,22 +149,29 @@ class Advertisement extends MY_Controller {
 			    }
 			    else
 			    {
-			    	if($name != '')
+					if($name != '')
 					{
-						@unlink("uploads/advertisement/".$name);
+						@unlink(FCPATH . "uploads/advertisement/".$name);
 					}
-					$upload_dir = 'uploads/advertisement/';
-					//$upload_dir_thumb = 'uploads/advertisement/thumb/';
+					$upload_dir = FCPATH . 'uploads/advertisement/';
+					if (!is_dir($upload_dir)) @mkdir($upload_dir, 0777, true);
 					$file_name=$_FILES["file"]["name"];
 					$file_tmp=$_FILES["file"]["tmp_name"];
 					$ext=pathinfo($file_name,PATHINFO_EXTENSION);
 					$file_name =pathinfo($file_name,PATHINFO_FILENAME);
 					$file_name = slugify($file_name);
 					$new_name = rand(11111,99999)."_".$file_name.".".$ext;
-					$isupload = compress($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir.$new_name, 30);
-					//square_crop($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir_thumb.$new_name, 400);
-					if($isupload)
-					{
+					$target_file = $upload_dir . $new_name;
+
+					$saved = false;
+					if (is_uploaded_file($file_tmp)) {
+						$saved = @move_uploaded_file($file_tmp, $target_file);
+					}
+					if (!$saved) {
+						$saved = @copy($file_tmp, $target_file);
+					}
+					if ($saved && file_exists($target_file)) {
+						compress($target_file, $target_file, 90);
 						$data['image'] = $new_name;
 					}
 				}

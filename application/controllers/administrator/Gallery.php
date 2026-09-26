@@ -45,25 +45,43 @@ class Gallery extends MY_Controller {
 				$ins_id = $this->Crud_Model->InsertData($table,$data);
 				if(!empty($_FILES['image_name']['name'][0]))
 				{
-					$image = array();
+					$target_dir = FCPATH . 'uploads/photo/';
+					$thumb_dir = FCPATH . 'uploads/photo/thumb/';
+					if (!is_dir($target_dir)) @mkdir($target_dir, 0777, true);
+					if (!is_dir($thumb_dir)) @mkdir($thumb_dir, 0777, true);
 					$ImageCount = count($_FILES['image_name']['name']);
 					if($ImageCount > 0)
 					{
 				        for($i = 0; $i < $ImageCount; $i++){
-				            $_FILES['file']['name']       = $_FILES['image_name']['name'][$i];
-				            $_FILES['file']['type']       = $_FILES['image_name']['type'][$i];
-				            $_FILES['file']['tmp_name']   = $_FILES['image_name']['tmp_name'][$i];
-				            $_FILES['file']['error']      = $_FILES['image_name']['error'][$i];
-				            $_FILES['file']['size']       = $_FILES['image_name']['size'][$i];
-			                // Uploaded file data
-			                $ext=pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
-			                $image_name = rand(11111,99999).".".$ext;
-							$isupload = compress($file_tmp=$_FILES["file"]["tmp_name"],'uploads/photo/'.$image_name, 30);
-							$upload_dir_thumb = 'uploads/photo/thumb/';
-							square_crop($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir_thumb.$image_name, 400);
-			                $uploadImgData['event_id'] = $ins_id;
-			                $uploadImgData['image_name'] = $image_name;
-			                $this->Crud_Model->InsertData('photo_gallery_detail',$uploadImgData);
+				            if(empty($_FILES['image_name']['name'][$i])) continue;
+				            $tmp_name = $_FILES['image_name']['tmp_name'][$i];
+				            if(empty($tmp_name)) continue;
+
+				            $ext = pathinfo($_FILES['image_name']['name'][$i], PATHINFO_EXTENSION);
+				            if(empty($ext)) $ext = 'jpg';
+				            $image_name = rand(11111,99999).".".$ext;
+							$target_main = $target_dir . $image_name;
+							$target_thumb = $thumb_dir . $image_name;
+
+							$saved = false;
+							if (is_uploaded_file($tmp_name)) {
+								$saved = @move_uploaded_file($tmp_name, $target_main);
+							}
+							if (!$saved) {
+								$saved = @copy($tmp_name, $target_main);
+							}
+
+							if ($saved && file_exists($target_main)) {
+								compress($target_main, $target_main, 90);
+								square_crop($target_main, $target_thumb, 400);
+								if (!file_exists($target_thumb) && file_exists($target_main)) {
+									@copy($target_main, $target_thumb);
+								}
+				                $uploadImgData = array();
+				                $uploadImgData['event_id'] = $ins_id;
+				                $uploadImgData['image_name'] = $image_name;
+				                $this->Crud_Model->InsertData('photo_gallery_detail',$uploadImgData);
+							}
 				        }
 				    }
 				}
@@ -109,25 +127,43 @@ class Gallery extends MY_Controller {
 				$ins_id = $this->Crud_Model->Updatedata($id,'id','photo_gallery',$data);
 				if(!empty($_FILES['image_name']['name'][0]))
 				{
-					$image = array();
+					$target_dir = FCPATH . 'uploads/photo/';
+					$thumb_dir = FCPATH . 'uploads/photo/thumb/';
+					if (!is_dir($target_dir)) @mkdir($target_dir, 0777, true);
+					if (!is_dir($thumb_dir)) @mkdir($thumb_dir, 0777, true);
 					$ImageCount = count($_FILES['image_name']['name']);
 					if($ImageCount > 0)
 					{
 				        for($i = 0; $i < $ImageCount; $i++){
-				            $_FILES['file']['name']       = $_FILES['image_name']['name'][$i];
-				            $_FILES['file']['type']       = $_FILES['image_name']['type'][$i];
-				            $_FILES['file']['tmp_name']   = $_FILES['image_name']['tmp_name'][$i];
-				            $_FILES['file']['error']      = $_FILES['image_name']['error'][$i];
-				            $_FILES['file']['size']       = $_FILES['image_name']['size'][$i];
-			                $ext=pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
-			                $image_name = rand(11111,99999).".".$ext;
-			                //echo $image_name; exit;
-							$isupload = compress($file_tmp=$_FILES["file"]["tmp_name"],'uploads/photo/'.$image_name, 30);
-							$upload_dir_thumb = 'uploads/photo/thumb/';
-							square_crop($file_tmp=$_FILES["file"]["tmp_name"],$upload_dir_thumb.$image_name, 400);
-			                $uploadImgData['event_id'] = $id;
-			                $uploadImgData['image_name'] = $image_name;
-			                $this->Crud_Model->InsertData('photo_gallery_detail',$uploadImgData);
+				            if(empty($_FILES['image_name']['name'][$i])) continue;
+				            $tmp_name = $_FILES['image_name']['tmp_name'][$i];
+				            if(empty($tmp_name)) continue;
+
+				            $ext = pathinfo($_FILES['image_name']['name'][$i], PATHINFO_EXTENSION);
+				            if(empty($ext)) $ext = 'jpg';
+				            $image_name = rand(11111,99999).".".$ext;
+							$target_main = $target_dir . $image_name;
+							$target_thumb = $thumb_dir . $image_name;
+
+							$saved = false;
+							if (is_uploaded_file($tmp_name)) {
+								$saved = @move_uploaded_file($tmp_name, $target_main);
+							}
+							if (!$saved) {
+								$saved = @copy($tmp_name, $target_main);
+							}
+
+							if ($saved && file_exists($target_main)) {
+								compress($target_main, $target_main, 90);
+								square_crop($target_main, $target_thumb, 400);
+								if (!file_exists($target_thumb) && file_exists($target_main)) {
+									@copy($target_main, $target_thumb);
+								}
+				                $uploadImgData = array();
+				                $uploadImgData['event_id'] = $id;
+				                $uploadImgData['image_name'] = $image_name;
+				                $this->Crud_Model->InsertData('photo_gallery_detail',$uploadImgData);
+							}
 				        }
 				    }
 				}
