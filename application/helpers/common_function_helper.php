@@ -32,107 +32,182 @@ function number_to_word( $num = '' ){
     return ($Rupees ? $Rupees . 'Only ' : '') . $paise;
 }
 function getHeight($image) {
-    $sizes = getimagesize($image);
-    $height = $sizes[1];
-    return $height;
+    if (function_exists('getimagesize') && file_exists($image)) {
+        $sizes = @getimagesize($image);
+        return isset($sizes[1]) ? $sizes[1] : 0;
+    }
+    return 0;
 }
 /* Function to get image width */
 function getWidth($image) {
-    $sizes = getimagesize($image);
-    $width = $sizes[0];
-    return $width;
+    if (function_exists('getimagesize') && file_exists($image)) {
+        $sizes = @getimagesize($image);
+        return isset($sizes[0]) ? $sizes[0] : 0;
+    }
+    return 0;
 }
 function convert_image_new($convFile){
-    $input = imagecreatefromstring( file_get_contents( $convFile ) );
-    list($width, $height) = getimagesize($convFile);
+    if (!extension_loaded('gd') || !function_exists('imagecreatefromstring') || !function_exists('imagecreatetruecolor')) {
+        return false;
+    }
+    if (!file_exists($convFile)) return false;
+    $content = @file_get_contents($convFile);
+    if ($content === false) return false;
+    $input = @imagecreatefromstring($content);
+    if (!$input) return false;
+    $sizes = @getimagesize($convFile);
+    if (!$sizes || !isset($sizes[0]) || !isset($sizes[1])) {
+        imagedestroy($input);
+        return false;
+    }
+    $width = $sizes[0];
+    $height = $sizes[1];
     $output = imagecreatetruecolor($width, $height);
-    $white = imagecolorallocate($output,  255, 255, 255);
+    $white = imagecolorallocate($output, 255, 255, 255);
     imagefilledrectangle($output, 0, 0, $width, $height, $white);
     imagecopy($output, $input, 0, 0, 0, 0, $width, $height);
+    imagedestroy($input);
     return $output; //imagejpeg($output, $output_file);
 }
 /* Function to resize image */
 function resizeImageNew($image,$width,$height,$scale, $ext) {
+    if (!extension_loaded('gd') || !function_exists('imagecreatetruecolor') || !file_exists($image)) {
+        return $image;
+    }
     $newImageWidth = ceil($width * $scale);
     $newImageHeight = ceil($height * $scale);
+    if ($newImageWidth <= 0 || $newImageHeight <= 0) return $image;
     $newImage = imagecreatetruecolor($newImageWidth,$newImageHeight);
-    //$source = imagecreatefromjpeg($image);
-    switch ($ext) {
+    $source = false;
+    switch (strtolower($ext)) {
         case 'jpg':
-            $source = imagecreatefromjpeg($image);
         case 'jpeg':
-            $source = imagecreatefromjpeg($image);
+            if (function_exists('imagecreatefromjpeg')) $source = @imagecreatefromjpeg($image);
             break;
         case 'gif':
-            $source = imagecreatefromgif($image);
+            if (function_exists('imagecreatefromgif')) $source = @imagecreatefromgif($image);
             break;
         case 'png':
-            $source = imagecreatefrompng($image);
-            break;
-        default:
-            $source = false;
+            if (function_exists('imagecreatefrompng')) $source = @imagecreatefrompng($image);
             break;
     }
-    $width = imagesx($source);
-    $height = imagesy($source);
-    imagecopyresampled($newImage,$source,0,0,0,0,$newImageWidth,$newImageHeight,$width,$height);
-    switch ($ext) {
+    if (!$source) {
+        imagedestroy($newImage);
+        return $image;
+    }
+    $srcWidth = imagesx($source);
+    $srcHeight = imagesy($source);
+    imagecopyresampled($newImage,$source,0,0,0,0,$newImageWidth,$newImageHeight,$srcWidth,$srcHeight);
+    switch (strtolower($ext)) {
         case 'jpg':
-            imagejpeg($newImage,$image,90);
-            break;
         case 'jpeg':
-            imagejpeg($newImage,$image,90);
+            if (function_exists('imagejpeg')) @imagejpeg($newImage,$image,90);
             break;
         case 'png':
-            imagepng($newImage,$image,90,"PNG_ALL_FILTERS");
+            if (function_exists('imagepng')) @imagepng($newImage,$image,9);
             break;
         default:
-            imagejpeg($newImage,$image,90);
+            if (function_exists('imagejpeg')) @imagejpeg($newImage,$image,90);
             break;
     }
+    imagedestroy($source);
+    imagedestroy($newImage);
     return $image;
-}
-function get_upcoming_events()
-{
-    $ci = &get_instance();
-    $ci->db->select('*');
-    $ci->db->from('events');
-    $ci->db->where('status',1);
-    $ci->db->order_by("id","desc");
-    $ci->db->limit(3);
-    $query = $ci->db->get();
-    return $query->result_array();
 }
 function compress($source, $destination, $quality)
 {
-    $info = getimagesize($source);
-    if ($info['mime'] == 'image/jpeg')
-        $image = imagecreatefromjpeg($source);
-    elseif ($info['mime'] == 'image/gif')
-        $image = imagecreatefromgif($source);
-    elseif ($info['mime'] == 'image/png')
-        $image = imagecreatefrompng($source);
-    imagejpeg($image, $destination, $quality);
+    if (!extension_loaded('gd') || !function_exists('imagecreatefromjpeg')) {
+        @copy($source, $destination);
+        return $destination;
+    }
+    $info = @getimagesize($source);
+    if (!$info || !isset($info['mime'])) {
+        @copy($source, $destination);
+        return $destination;
+    }
+    $image = false;
+    if ($info['mime'] == 'image/jpeg' && function_exists('imagecreatefromjpeg'))
+        $image = @imagecreatefromjpeg($source);
+    elseif ($info['mime'] == 'image/gif' && function_exists('imagecreatefromgif'))
+        $image = @imagecreatefromgif($source);
+    elseif ($info['mime'] == 'image/png' && function_exists('imagecreatefrompng'))
+        $image = @imagecreatefrompng($source);
+
+    if ($image !== false && $image !== null) {
+        if (function_exists('imagejpeg')) {
+            @imagejpeg($image, $destination, $quality);
+        } else {
+            @copy($source, $destination);
+        }
+        imagedestroy($image);
+    } else {
+        @copy($source, $destination);
+    }
     return $destination;
 }
 function make_thumb($src, $dest, $desired_width) {
+    if (!extension_loaded('gd') || !function_exists('imagecreatefromjpeg') || !function_exists('imagecreatetruecolor')) {
+        @copy($src, $dest);
+        return;
+    }
     /* read the source image */
-    $source_image = imagecreatefromjpeg($src);
+    $info = @getimagesize($src);
+    if (!$info) {
+        @copy($src, $dest);
+        return;
+    }
+    $mime = isset($info['mime']) ? $info['mime'] : '';
+    $source_image = false;
+    if ($mime == 'image/jpeg' && function_exists('imagecreatefromjpeg')) {
+        $source_image = @imagecreatefromjpeg($src);
+    } elseif ($mime == 'image/png' && function_exists('imagecreatefrompng')) {
+        $source_image = @imagecreatefrompng($src);
+    } elseif ($mime == 'image/gif' && function_exists('imagecreatefromgif')) {
+        $source_image = @imagecreatefromgif($src);
+    } else {
+        if (function_exists('imagecreatefromjpeg')) {
+            $source_image = @imagecreatefromjpeg($src);
+        }
+    }
+    if (!$source_image) {
+        @copy($src, $dest);
+        return;
+    }
     $width = imagesx($source_image);
     $height = imagesy($source_image);
+    if ($width <= 0) {
+        @copy($src, $dest);
+        imagedestroy($source_image);
+        return;
+    }
     /* find the "desired height" of this thumbnail, relative to the desired width  */
     $desired_height = floor($height * ($desired_width / $width));
+    if ($desired_height <= 0) $desired_height = 1;
     /* create a new, "virtual" image */
     $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
     /* copy source image at a resized size */
     imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
     /* create the physical thumbnail image to its destination */
-    imagejpeg($virtual_image, $dest);
+    if (function_exists('imagejpeg')) {
+        @imagejpeg($virtual_image, $dest);
+    } else {
+        @copy($src, $dest);
+    }
+    imagedestroy($source_image);
+    imagedestroy($virtual_image);
 }
 function create_thumbAll($image1_path, $dest, $box=300){
-    list($width1, $height1, $image1_type) = getimagesize($image1_path);
-  //  $image2_path = dirname($image1_path) . '/tn_' .basename($image1_path);
-    $image2_path =$dest;
+    if (!extension_loaded('gd')) {
+        @copy($image1_path, $dest);
+        return;
+    }
+    $info = @getimagesize($image1_path);
+    if (!$info) {
+        @copy($image1_path, $dest);
+        return;
+    }
+    list($width1, $height1, $image1_type) = $info;
+    $image2_path = $dest;
     // make image smaller if doesn't fit to the box 
     if ($width1 > $box || $height1 > $box){
         // set the largest dimension
@@ -141,15 +216,28 @@ function create_thumbAll($image1_path, $dest, $box=300){
         if ($width1 < $height1) $width2  = round(($box / $height1) * $width1);
         else                    $height2 = round(($box / $width1) * $height1);
         // set image type, blending and set functions for gif, jpeg and png
+        $img = '';
         switch($image1_type){
             case IMAGETYPE_PNG:  $img = 'png';  $blending = false; break;
             case IMAGETYPE_GIF:  $img = 'gif';  $blending = true;  break;
             case IMAGETYPE_JPEG: $img = 'jpeg'; break;
         }
+        if (!$img) {
+            @copy($image1_path, $image2_path);
+            return;
+        }
         $imagecreate = "imagecreatefrom$img";
         $imagesave   = "image$img";
+        if (!function_exists($imagecreate) || !function_exists($imagesave) || !function_exists('imagecreatetruecolor')) {
+            @copy($image1_path, $image2_path);
+            return;
+        }
         // initialize image from the file
-        $image1 = $imagecreate($image1_path);
+        $image1 = @$imagecreate($image1_path);
+        if (!$image1) {
+            @copy($image1_path, $image2_path);
+            return;
+        }
         // create a new true color image with dimensions $width2 and $height2
         $image2 = imagecreatetruecolor($width2, $height2);
         // preserve transparency for PNG and GIF images
@@ -165,38 +253,57 @@ function create_thumbAll($image1_path, $dest, $box=300){
         }
         // save thumbnail image to the file
         imagecopyresampled($image2, $image1, 0, 0, 0, 0, $width2, $height2, $width1, $height1);
-        $imagesave($image2, $image2_path);
+        @$imagesave($image2, $image2_path);
+        imagedestroy($image1);
+        imagedestroy($image2);
     }
     // else just copy the image
-    else copy($image1_path, $image2_path);
+    else @copy($image1_path, $image2_path);
 }
 function square_crop($src_image, $dest_image, $thumb_size = 64, $jpg_quality = 90)
 {
+    if (!extension_loaded('gd') || !function_exists('imagecreatetruecolor')) {
+        @copy($src_image, $dest_image);
+        return true;
+    }
     // Get dimensions of existing image
-    $image = getimagesize($src_image);
+    $image = @getimagesize($src_image);
     // Check for valid dimensions
-    if( $image[0] <= 0 || $image[1] <= 0 ) return false;
+    if( !$image || $image[0] <= 0 || $image[1] <= 0 ) {
+        @copy($src_image, $dest_image);
+        return false;
+    }
     // Determine format from MIME-Type
     $image['format'] = strtolower(preg_replace('/^.*?\//', '', $image['mime']));
+    $image_data = false;
     // Import image
     switch( $image['format'] ) {
         case 'jpg':
         case 'jpeg':
-            $image_data = imagecreatefromjpeg($src_image);
+            if (function_exists('imagecreatefromjpeg')) {
+                $image_data = @imagecreatefromjpeg($src_image);
+            }
         break;
         case 'png':
-            $image_data = imagecreatefrompng($src_image);
+            if (function_exists('imagecreatefrompng')) {
+                $image_data = @imagecreatefrompng($src_image);
+            }
         break;
         case 'gif':
-            $image_data = imagecreatefromgif($src_image);
+            if (function_exists('imagecreatefromgif')) {
+                $image_data = @imagecreatefromgif($src_image);
+            }
         break;
         default:
-            // Unsupported format
+            @copy($src_image, $dest_image);
             return false;
         break;
     }
     // Verify import
-    if( $image_data == false ) return false;
+    if( $image_data == false ) {
+        @copy($src_image, $dest_image);
+        return false;
+    }
     // Calculate measurements
     if( $image[0] > $image[1] ) {
         // For landscape images
@@ -224,23 +331,36 @@ function square_crop($src_image, $dest_image, $thumb_size = 64, $jpg_quality = 9
         $square_size
     )) {
         // Create thumbnail
-        switch( strtolower(preg_replace('/^.*\./', '', $dest_image)) ) {
+        $result = false;
+        $ext = strtolower(preg_replace('/^.*\./', '', $dest_image));
+        switch( $ext ) {
             case 'jpg':
             case 'jpeg':
-                return imagejpeg($canvas, $dest_image, $jpg_quality);
+                if (function_exists('imagejpeg')) {
+                    $result = @imagejpeg($canvas, $dest_image, $jpg_quality);
+                }
             break;
             case 'png':
-                return imagepng($canvas, $dest_image);
+                if (function_exists('imagepng')) {
+                    $result = @imagepng($canvas, $dest_image);
+                }
             break;
             case 'gif':
-                return imagegif($canvas, $dest_image);
-            break;
-            default:
-                // Unsupported format
-                return false;
+                if (function_exists('imagegif')) {
+                    $result = @imagegif($canvas, $dest_image);
+                }
             break;
         }
+        imagedestroy($canvas);
+        imagedestroy($image_data);
+        if (!$result) {
+            @copy($src_image, $dest_image);
+        }
+        return $result;
     } else {
+        imagedestroy($canvas);
+        imagedestroy($image_data);
+        @copy($src_image, $dest_image);
         return false;
     }
 }

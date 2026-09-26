@@ -36,8 +36,13 @@ class Ajax_banner extends MY_Controller {
 							$src_ext = "jpg";
 							$filedir = SHPBANIMG;
 							chmod($filePath, 0777);
-							$actual_image_name = $name;
-							imagejpeg (convert_image_new($filePath), "$filedir$name", 90 );
+							$conv = convert_image_new($filePath);
+							if ($conv !== false && function_exists('imagejpeg')) {
+								@imagejpeg($conv, "$filedir$name", 90);
+								imagedestroy($conv);
+							} else {
+								@copy($filePath, "$filedir$name");
+							}
 						}
 						$filePath = SHPBANIMG . $name;
 						if ($width > $max_width){ 
