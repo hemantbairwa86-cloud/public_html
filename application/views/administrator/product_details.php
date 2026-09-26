@@ -505,16 +505,5 @@
         })
   }
 </script>
-<script type="text/javascript">
-    setTimeout(function(){
-      $('#myDiv').fadeOut(500);
-    }, 5000);
-  	$(document).ready(function(){    
-		$(".loading").attr('style',"display: none;");
-	});
-	$("#myForm").on('submit',function(){
-		$(".loading").attr('style',"display: block;");
-	 }) 	 
-    </script>
 </body>
 </html>
