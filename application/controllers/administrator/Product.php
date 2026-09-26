@@ -232,7 +232,7 @@ class Product extends MY_Controller  {
 			}
 			if(empty($sel_weight[0]))
 			{
-				$this->form_validation->set_rules('sel_weight_1', 'Weight', 'required|numeric');
+				$this->form_validation->set_rules('sel_weight[]', 'Weight', 'required');
 			}
 			/*if(empty($txt_old_price[0]))
 			{
@@ -240,7 +240,7 @@ class Product extends MY_Controller  {
 			}*/
 			if(empty($txt_new_price[0]))
 			{
-				$this->form_validation->set_rules('txt_new_price_1', 'New Price', 'required|numeric');
+				$this->form_validation->set_rules('txt_new_price[]', 'New Price', 'required');
 			}
 			if ($this->form_validation->run() == FALSE) {
 				$id=$this->input->post('id');
@@ -258,12 +258,11 @@ class Product extends MY_Controller  {
 				$data['product_price']=$this->Crud_Model->getDatafromtablewhere('product_price',array('product_id'=>$id),'ASC');
 				$data['weight_master']=$this->Crud_Model->getDatafromtablewhereorderby('weight_master',array('status'=>1),'ASC','unit');
 				$data['collectiontype']=$editdata['collectiontype'];
-				$data['categoryid']=$editdata['categoryid'];
 				$data["name"] =$this->input->post('name');
-				$data['sel_weight'] = $sel_weight[0];
-				$data['txt_old_price'] = $txt_old_price[0];
-				$data['txt_new_price'] = $txt_new_price[0];
-				$data['selectedhighlight']=explode(',',$editdata['highlight']);
+				$data['sel_weight'] = isset($sel_weight[0]) ? $sel_weight[0] : '';
+				$data['txt_old_price'] = isset($txt_old_price[0]) ? $txt_old_price[0] : '';
+				$data['txt_new_price'] = isset($txt_new_price[0]) ? $txt_new_price[0] : '';
+				$data['selectedhighlight']=!empty($editdata['highlight']) ? explode(',',$editdata['highlight']) : array();
 				//print_r($data['selectedgender']);exit;
 				$data['productcode']=$editdata['productcode'];
 				$data['price']=$editdata['price'];
@@ -278,7 +277,6 @@ class Product extends MY_Controller  {
 				$CollectionName =url_title($CollectionDetails['name'], 'dash', true);
 				$ProductCodeName =url_title($productcode, 'dash', true); ;
 				$ProductName = $CollectionName.'_'.$productcode;
-				$ProductFullName = $CollectionDetails['name'].' '.$CategoryDetails['name'].' '.$productcode;
 				$ProductSlug = $CollectionName.'_'.$ProductCodeName;
 				$data["collectiontype"] =$collectiontype;
 				//$data["slug"] =$ProductFullName;
@@ -290,10 +288,12 @@ class Product extends MY_Controller  {
 				$data['additional_information']= trim($this->input->post('additional_information')); 
 				$data["status"] =1;
 				$data["isdelete"] =0;
-				$data['created_datetime']=date('Y-m-d H:i:s');
+				$data['modified_datetime']=date('Y-m-d H:i:s');
 				$data['createdip']=$_SERVER['REMOTE_ADDR'];
 				if($this->input->post('highlights')){
 					$data["highlight"] =implode(",",$this->input->post('highlights'));
+				} else {
+					$data["highlight"] ='';
 				}
 				$ProductId=$this->input->post('id');
 				$this->Crud_Model->Updatedata($ProductId,'id','product',$data);
@@ -485,7 +485,8 @@ class Product extends MY_Controller  {
             }else{
             	$nestedData[]='<button type="button" class="btn btn-sm btn-toggle" onClick="change_status(this);" data-table="product" data-field="status" data-id-name="id" data-id="'.$value['id'].'" data-toggle="button" aria-pressed="0" id="sts_btn_'.$value['id'].'" autocomplete="off"><div class="handle"></div></button>';
             }
-            $nestedData[] = '<a href="'.$edit_url.'" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Product" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>'; 
+            $edit_url = base_url('administrator/product/editview/'.$value['id']);
+            $nestedData[] = '<a href="'.$edit_url.'" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Product" data-toggle="tooltip"><i class="fa fa-pencil"></i></a> <a href="javascript:void(0);" onClick="check_confirm_delete('.$value['id'].');" class="btn btn-sm btn-outline-danger btn-action-icon" title="Delete Product" data-toggle="tooltip"><i class="fa fa-trash"></i></a>'; 
             $data[] = $nestedData;
             $k++; 
         }

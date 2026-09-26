@@ -323,9 +323,12 @@
       	$(document).ready(function(){    
     		$(".loading").attr('style',"display: none;");
     	});
-    	 $("#myForm").on('submit',function(){
-    		$(".loading").attr('style',"display: block;");
-	 }) 
+	 function validate() {
+	    return true;
+	 }
+	 $("#myForm").on('submit',function(){
+		$(".loading").attr('style',"display: block;");
+	 }); 
 
 
 
