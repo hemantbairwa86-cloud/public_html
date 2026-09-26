@@ -42,13 +42,17 @@
             reader.onload = function(e) {
               var fileSize = (file.size / 1024).toFixed(1) + ' KB';
               var previewHtml = '<div class="col-6 col-sm-4 col-md-3 mb-3 new-preview-card">' +
-                '<div class="upload-preview-box w-100 text-center" style="border: 2px dashed #179957; background: #f0fdf4; padding: 10px; border-radius: 10px;">' +
-                  '<span class="badge badge-success mb-2" style="font-size:0.75rem; background:#179957;">Selected New</span>' +
-                  '<a href="' + e.target.result + '" target="_blank" title="' + file.name + '">' +
-                    '<img src="' + e.target.result + '" alt="' + file.name + '" style="max-height:130px; width:auto; max-width:100%; object-fit:contain; border-radius:6px; background:#fff; padding:4px; border:1px solid #cbd5e1;" />' +
-                  '</a>' +
-                  '<div class="mt-2 text-truncate text-dark small" title="' + file.name + '"><strong>' + file.name + '</strong></div>' +
-                  '<div class="text-muted" style="font-size:0.75rem;">' + fileSize + '</div>' +
+                '<div class="preview-card-item text-center">' +
+                  '<span class="preview-badge">Selected New</span>' +
+                  '<div class="preview-img-wrapper">' +
+                    '<a href="' + e.target.result + '" target="_blank" title="Click to view ' + file.name + '">' +
+                      '<img src="' + e.target.result + '" alt="' + file.name + '" />' +
+                    '</a>' +
+                  '</div>' +
+                  '<div class="preview-details">' +
+                    '<div class="preview-filename" title="' + file.name + '">' + file.name + '</div>' +
+                    '<div class="preview-filesize">' + fileSize + '</div>' +
+                  '</div>' +
                 '</div>' +
               '</div>';
               $multiPreviewContainer.append(previewHtml);

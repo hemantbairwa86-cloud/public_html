@@ -120,12 +120,17 @@
                             {
                               foreach ($image as $key => $value) { ?>
                     <div class="col-6 col-sm-4 col-md-3 mb-3" id="productimage<?php echo $value['id']; ?>">
-                      <div class="upload-preview-box w-100 text-center"> 
-                        <a href="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" target="_blank" title="Click to view full image">
-                          <img src="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" alt="Product Thumbnail">
-                        </a>
-                        <div class="mt-2 text-center"> 
-                          <a onClick="check_confirm_delete('<?php echo $value['id']; ?>');" href="javascript:void(0);" class="btn btn-sm btn-outline-danger" title="Delete Image"> <i class="fa fa-trash"></i> Delete </a> 
+                      <div class="preview-card-item text-center"> 
+                        <div class="preview-img-wrapper">
+                          <a href="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" target="_blank" title="Click to view full image">
+                            <img src="<?php echo base_url().'uploads/product/thumbnails/'.$value['image_name']; ?>" alt="Product Thumbnail">
+                          </a>
+                        </div>
+                        <div class="preview-details">
+                          <div class="preview-filename" title="<?php echo $value['image_name']; ?>"><?php echo $value['image_name']; ?></div>
+                        </div>
+                        <div class="mt-2 text-center w-100"> 
+                          <a onClick="check_confirm_delete('<?php echo $value['id']; ?>');" href="javascript:void(0);" class="btn btn-sm btn-outline-danger w-100" title="Delete Image"> <i class="fa fa-trash"></i> Delete </a> 
                         </div>
                       </div>
                     </div>

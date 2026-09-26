@@ -1599,52 +1599,120 @@ a.btn-outline-danger:hover,
   transform: translateY(-1px) !important;
 }
 
-/* Image Preview Container Card */
+/* Premium Image Preview Card Container */
+.preview-card-item,
 .upload-preview-box,
 .image-preview-card {
-  display: inline-flex !important;
+  display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  justify-content: center !important;
-  padding: 12px 16px !important;
-  margin: 12px 0 !important;
-  background: #f8fafc !important;
-  border: 2px dashed #cbd5e1 !important;
+  justify-content: space-between !important;
+  padding: 10px !important;
+  margin: 6px 0 !important;
+  background: #ffffff !important;
+  border: 1.5px dashed #179957 !important;
   border-radius: 12px !important;
   position: relative !important;
   transition: all 0.25s ease !important;
-  max-width: 100% !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03) !important;
+  min-height: 220px !important;
+  overflow: hidden !important;
 }
 
+.preview-card-item:hover,
 .upload-preview-box:hover,
 .image-preview-card:hover {
-  border-color: #10b981 !important;
+  border-style: solid !important;
+  border-color: #179957 !important;
   background: #f0fdf4 !important;
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.12) !important;
+  box-shadow: 0 6px 18px rgba(23, 153, 87, 0.15) !important;
+  transform: translateY(-2px) !important;
 }
 
+/* Badge for Selected New Image */
+.preview-card-item .preview-badge,
+.upload-preview-box .preview-badge {
+  background: linear-gradient(135deg, #179957 0%, #115e59 100%) !important;
+  color: #ffffff !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  padding: 3px 10px !important;
+  border-radius: 20px !important;
+  text-transform: uppercase !important;
+  margin: 0 0 8px 0 !important;
+  box-shadow: 0 2px 6px rgba(23, 153, 87, 0.25) !important;
+  display: inline-block !important;
+  line-height: 1.2 !important;
+}
+
+/* Image Wrapper Box */
+.preview-card-item .preview-img-wrapper,
+.upload-preview-box .preview-img-wrapper {
+  width: 100% !important;
+  height: 120px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #f8fafc !important;
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: hidden !important;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+}
+
+.preview-card-item img,
 .upload-preview-box img,
 .image-preview-card img,
 #previewbanner1 {
   max-width: 100% !important;
-  max-height: 140px !important;
+  max-height: 100% !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
-  border-radius: 8px !important;
-  background-color: #ffffff !important;
-  padding: 6px !important;
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  border-radius: 6px !important;
+  transition: transform 0.25s ease !important;
 }
 
-.upload-preview-box img:hover,
-.image-preview-card img:hover,
+.preview-card-item:hover img,
+.upload-preview-box:hover img,
+.image-preview-card:hover img,
 #previewbanner1:hover {
-  transform: scale(1.03) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Filename & Details */
+.preview-card-item .preview-details,
+.upload-preview-box .preview-details {
+  width: 100% !important;
+  margin-top: 6px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.preview-card-item .preview-filename,
+.upload-preview-box .preview-filename {
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: 100% !important;
+  display: block !important;
+  line-height: 1.3 !important;
+}
+
+.preview-card-item .preview-filesize,
+.upload-preview-box .preview-filesize {
+  font-size: 0.72rem !important;
+  color: #64748b !important;
+  margin-top: 2px !important;
+  font-weight: 500 !important;
 }
 
 /* Dimension Specification Pill Badges */
