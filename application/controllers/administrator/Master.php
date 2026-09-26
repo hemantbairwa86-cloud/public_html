@@ -148,6 +148,21 @@ class Master extends MY_Controller  {
 			$this->load->view('administrator/category',$data);
 		}
 	}
+	public function delete_category($id = null)
+	{
+		if(!empty($id))
+		{
+			$editdata = $this->Crud_Model->getById($id, 'id', 'category');
+			if (!empty($editdata['image'])) {
+				@unlink(FCPATH . 'uploads/collections/' . $editdata['image']);
+				@unlink(FCPATH . 'uploads/collections/thumbnails/' . $editdata['image']);
+			}
+			$this->Crud_Model->DeletData($id, 'id', 'category');
+			$this->session->set_flashdata('success', 'Category Deleted Successfully.');
+		}
+		redirect('administrator/master/category');
+		exit;
+	}
 	public function file_check_edit($str)
 	{
 	        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png');
@@ -504,6 +519,17 @@ class Master extends MY_Controller  {
 		}
 		
         echo json_encode(array("status"=>1));exit;
+	}
+
+	public function delete_weight($id = null)
+	{
+		if(!empty($id))
+		{
+			$this->Crud_Model->DeletData($id, 'id', 'weight_master');
+			$this->session->set_flashdata('success', 'Weight Variant Deleted Successfully.');
+		}
+		redirect('administrator/master/weight');
+		exit;
 	}
 }
 ?>

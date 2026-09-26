@@ -89,7 +89,10 @@
                           </button>
                           <?php } ?>
                         </td>
-                        <td><a href="<?php echo base_url(); ?>administrator/master/edit_weight/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Weight Variant" data-toggle="tooltip"><i class="fa fa-pencil"></i></a></td>
+                        <td>
+                          <a href="<?php echo base_url(); ?>administrator/master/edit_weight/<?php echo $val['id']; ?>" class="btn btn-sm btn-outline-primary btn-action-icon" title="Edit Weight Variant" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                          <a href="javascript:void(0);" onClick="check_confirm_delete('<?php echo $val['id']; ?>');" class="btn btn-sm btn-outline-danger btn-action-icon" title="Delete Weight Variant" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
+                        </td>
                       </tr>
                       <?php
                       $i++;
@@ -180,7 +183,23 @@
 	});
 	 $("#myForm").on('submit',function(){
 		$(".loading").attr('style',"display: block;");
-	 }) 
+	 });
+
+    function check_confirm_delete(row_id)
+    {
+      swal({
+            title: "Delete",
+            text: 'Are you sure you want to delete this weight variant?',
+            icon: "error",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                window.location.href = "<?php echo base_url() ?>"+"administrator/master/delete_weight/"+row_id;
+            }
+          });
+    }
     </script>
 </body>
 </html>
