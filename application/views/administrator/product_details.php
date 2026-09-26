@@ -111,9 +111,10 @@
                           </div>
                         </div>
                         <?php echo '<div class="text-danger">'.form_error('image_name[]').'</div>' ?> </div>
+                      <div class="row mt-3 mb-2" id="new_file_previews"></div>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row" id="existing_file_previews">
                     <?php
                             if(!empty($image))
                             {
@@ -324,10 +325,66 @@
     		$(".loading").attr('style',"display: none;");
     	});
 	 function validate() {
+	    var collectiontype = $('#collectiontype').val();
+	    var name = $.trim($('#name').val());
+	    var productcode = $.trim($('#productcode').val());
+	    var isEdit = $('#id').val() !== '' && $('#id').val() !== '0';
+	    var hasExistingImages = $('#existing_file_previews .upload-preview-box').length > 0;
+	    var fileInput = $('.file-upload-default')[0];
+	    var hasNewImages = fileInput && fileInput.files && fileInput.files.length > 0;
+
+	    if (!collectiontype) {
+	        if (typeof swal !== 'undefined') { swal('Required', 'Please select a Category.', 'warning'); }
+	        $('#collectiontype').focus();
+	        return false;
+	    }
+	    if (!name) {
+	        if (typeof swal !== 'undefined') { swal('Required', 'Please enter a Product Name.', 'warning'); }
+	        $('#name').focus();
+	        return false;
+	    }
+	    if (!productcode) {
+	        if (typeof swal !== 'undefined') { swal('Required', 'Please enter a Product Code.', 'warning'); }
+	        $('#productcode').focus();
+	        return false;
+	    }
+	    if (!isEdit && !hasExistingImages && !hasNewImages) {
+	        if (typeof swal !== 'undefined') { swal('Required', 'Please select at least one Product Image to upload.', 'warning'); }
+	        return false;
+	    }
+
+	    var weightValid = true;
+	    $('select[name="sel_weight[]"]').each(function() {
+	        if (!$(this).val()) {
+	            weightValid = false;
+	        }
+	    });
+	    if (!weightValid) {
+	        if (typeof swal !== 'undefined') { swal('Required', 'Please select a Weight for all price variants.', 'warning'); }
+	        return false;
+	    }
+
+	    var priceValid = true;
+	    $('input[name="txt_new_price[]"]').each(function() {
+	        if (!$.trim($(this).val())) {
+	            priceValid = false;
+	        }
+	    });
+	    if (!priceValid) {
+	        if (typeof swal !== 'undefined') { swal('Required', 'Please enter a valid M.R.P. price for all variants.', 'warning'); }
+	        return false;
+	    }
+
 	    return true;
 	 }
 	 $("#myForm").on('submit',function(){
-		$(".loading").attr('style',"display: block;");
+		if (validate()) {
+			$(".loading").attr('style',"display: block;");
+			return true;
+		} else {
+			$(".loading").attr('style',"display: none;");
+			return false;
+		}
 	 }); 
 
 
