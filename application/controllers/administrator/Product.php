@@ -94,11 +94,13 @@ class Product extends MY_Controller  {
 				$ProductId = $this->Crud_Model->InsertData('product',$data);
 				// Image Upload
 				$folder='product';
-				if(!is_dir('uploads/'.$folder.'/')){
-					@mkdir('uploads/'.$folder.'/', 0777);
+				$target_dir = FCPATH . 'uploads/' . $folder . '/';
+				$thumb_dir = FCPATH . 'uploads/' . $folder . '/thumbnails/';
+				if(!is_dir($target_dir)){
+					@mkdir($target_dir, 0777, true);
 				}
-				if(!is_dir('uploads/'.$folder.'/thumbnails')){
-					@mkdir('uploads/'.$folder.'/thumbnails', 0777);
+				if(!is_dir($thumb_dir)){
+					@mkdir($thumb_dir, 0777, true);
 				}
 				if(!empty($_FILES['image_name']['name'][0]))
 				{
@@ -114,8 +116,8 @@ class Product extends MY_Controller  {
 				            $ext = pathinfo($_FILES['image_name']['name'][$i], PATHINFO_EXTENSION);
 				            if(empty($ext)) $ext = 'jpg';
 				            $image_name = rand(11111,99999).".".$ext;
-							$target_main = 'uploads/product/'.$image_name;
-							$target_thumb = 'uploads/product/thumbnails/'.$image_name;
+							$target_main = $target_dir . $image_name;
+							$target_thumb = $thumb_dir . $image_name;
 
 							$saved = false;
 							if (is_uploaded_file($tmp_name)) {
@@ -314,11 +316,13 @@ class Product extends MY_Controller  {
 				$this->Crud_Model->Updatedata($ProductId,'id','product',$data);
 				// Image Upload
 					$folder='product';
-					if(!is_dir('uploads/'.$folder.'/')){
-						@mkdir('uploads/'.$folder.'/', 0777);
+					$target_dir = FCPATH . 'uploads/' . $folder . '/';
+					$thumb_dir = FCPATH . 'uploads/' . $folder . '/thumbnails/';
+					if(!is_dir($target_dir)){
+						@mkdir($target_dir, 0777, true);
 					}
-					if(!is_dir('uploads/'.$folder.'/thumbnails')){
-						@mkdir('uploads/'.$folder.'/thumbnails', 0777);
+					if(!is_dir($thumb_dir)){
+						@mkdir($thumb_dir, 0777, true);
 					}
 					if(!empty($_FILES['image_name']['name'][0]))
 					{
@@ -334,8 +338,8 @@ class Product extends MY_Controller  {
 					            $ext = pathinfo($_FILES['image_name']['name'][$i], PATHINFO_EXTENSION);
 					            if(empty($ext)) $ext = 'jpg';
 					            $image_name = rand(11111,99999).".".$ext;
-								$target_main = 'uploads/product/'.$image_name;
-								$target_thumb = 'uploads/product/thumbnails/'.$image_name;
+								$target_main = $target_dir . $image_name;
+								$target_thumb = $thumb_dir . $image_name;
 
 								$saved = false;
 								if (is_uploaded_file($tmp_name)) {
@@ -492,17 +496,19 @@ class Product extends MY_Controller  {
         foreach ($row as $key => $value) 
         { 
             $nestedData = array();
-            if($value['image_name']!='')
+            if(!empty($value['image_name']))
 			{
-				$im='uploads/product/'.$value['image_name'];
-				if(file_exists($im))
-				{
-					$img=base_url().'uploads/product/'.$value['image_name'];
-				}else{
-					$img=base_url().'uploads/book.png';
+				$thumb_path = FCPATH . 'uploads/product/thumbnails/' . $value['image_name'];
+				$main_path = FCPATH . 'uploads/product/' . $value['image_name'];
+				if (file_exists($thumb_path)) {
+					$img = base_url() . 'uploads/product/thumbnails/' . $value['image_name'];
+				} elseif (file_exists($main_path)) {
+					$img = base_url() . 'uploads/product/' . $value['image_name'];
+				} else {
+					$img = base_url() . 'uploads/book.png';
 				}
 			}else{
-				$img=base_url().'uploads/book.png';
+				$img = base_url() . 'uploads/book.png';
 			}
             $nestedData[] = $k;
             $nestedData[] ='<img src='.$img.' alt="Img">';
